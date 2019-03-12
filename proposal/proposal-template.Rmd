@@ -9,7 +9,7 @@ abstract: |
           | about what to expect from the rest of the document.
 date: "November 13, 2018"
 author:
-  - Leia Organa
+  - Ajay Dugar
   - Han Solo
   - Luke Skywalker
   - Lando Calrissian
@@ -64,6 +64,8 @@ knitr::include_graphics("images/data-science.png")
 
 
 # Introduction
+
+
 
 The **introduction** section provides a preview of the project's focus. Within
 this section, provide an overview on the selected topic for the consumption of a
