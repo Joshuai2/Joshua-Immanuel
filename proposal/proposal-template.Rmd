@@ -10,7 +10,7 @@ abstract: |
 date: "November 13, 2018"
 author:
   - Ajay Dugar
-  - Han Solo
+  - Bhanuchandra Kappala
   - Luke Skywalker
   - Lando Calrissian
 bibliography: bibliography.bib
@@ -114,6 +114,9 @@ Address the following questions:
 - What other ideas have been attempted?
 - Why is your team's idea original compared to prior work?
 
+
+
+
 # Methods
 
 The **methods** section should discuss how you plan to solve your problem.
@@ -167,12 +170,26 @@ a project management overview of *who* on your team will be doing *what* and *wh
 by answering:
 
 - Is this project able to be completed before the end of the semester?
+It should be - while the data set is large, outside of the resoure requirement it should not be overly difficult to implement this specific idea.
+
 - What steps must occur to complete the project before the end of the semester?
+Accumulate the data in a timely manner - we must find what data we are going to use and apply our regression to it. Then test the predictive power by comparing it to an ETF and generate visualizations. Building the model/obtaining the data will probably the most time intensive portion fo the project.
+
 - What is the work plan to accomplish the necessary tasks before the end of the
   semester?
   - Specify who is doing what and when.
   - Consider making a [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart)
     to highlight each stage of the project.
+    
+    Ajay       - find and clean data
+    Joshua     - choose variables
+    Eric       - build model
+    Bhanu      - train model
+    Ajay       - apply model to IBM data
+    Eric       - analyze validity of model
+    Bhanu/Joshua (anyone else)     - visualize results
+    
+    
 
 # Conclusion
 

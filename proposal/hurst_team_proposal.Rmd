@@ -178,12 +178,22 @@ a project management overview of *who* on your team will be doing *what* and *wh
 by answering:
 
 - Is this project able to be completed before the end of the semester?
+It should be - while the data set is large, outside of the resoure requirement it should not be overly difficult to implement this specific idea. We will need to familiarize ourself with the specific data used here - lots of unique compiled stats are used in basketball as opposed to the typical counting stats. 
+
 - What steps must occur to complete the project before the end of the semester?
+
+Accumulate the data in a timely manner - we must find what data we are going to use and apply our model to it. We plan to have 30 years worth of data so data cleaning/valdiation is an important and time consuming portion. We must also create specific derived variables that will more effectively illustrate the value of each player to their team for all the specific criteria. We must then model each of the awards - they will all have unique weights for each of the statistics.
+
 - What is the work plan to accomplish the necessary tasks before the end of the
   semester?
   - Specify who is doing what and when.
   - Consider making a [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart)
     to highlight each stage of the project.
+    
+    Ajay - obtain data (primarily from BBallRef) and create derived variables
+    Bhanu - build model and generate output (train model for each individual award)
+    Joshua and Eric - build visualization components of the Shiny app
+    Ajay and Bhanu - add sentiment analysis portion to visualizations (make a word cloud)
 
 # Conclusion
 
