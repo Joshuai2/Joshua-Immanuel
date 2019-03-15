@@ -110,7 +110,12 @@ aptly put it:
 Address the following questions:
 
 - What other ideas have been attempted?
+While not specifically related to this project, the application of sabermetrics has become a point of interest for many baseball teams. Likewise, we have began to see this same transition in basketball analytics. The long term view of teams that have embraced analytics has been very good: the Philadelphia 76ers and Houston Rockets are both top seeded teams that have a significant chance at being the Championship team. While we haven't seen rigorous academic analysis of predicting NBA awards, there have been some implementations done by various individuals. There are also award trackers that just use raw data - specifically VORP (Value over Replacement Player) and PER (Player Efficiency Rating) and the player with the highest value is predicted to win. While these ways of predicting awards works somewhat well, they tend to have problems undervaluing certain players (the inventor of PER notes that it is not an end all metric - it rewards inefficient shooting and doesn't sufficiently reward effective defense) so our idea will be unique.
+
 - Why is your team's idea original compared to prior work?
+
+A lot of the statistics in use with modern publications are based on the research of one individual: Daryl Morey. We will derive our own variables and determine how impactful they are in determining wins using a regression  model. 
+
 
 # Methods
 
@@ -139,21 +144,24 @@ To satisfy this section, provide detailed responses for the following:
   - Regression Analysis: leaps, glmnet, caret
   
 - What code will the group need to write for the project?
-  1. Code for importing
+  1. Code for importing the data
   2. Code for cleaning the pre-collected data and randomizing it
-  3. Code for training for a linear regression model where we choose the best model with the lowest MSE. In our case, we need to get the $\beta$ values for the model using the training data set(QTEC ETF).
-  4. Code for evaluating the model by testing it against the test data set (IBM). 
-  5. Code for creating the interactive user interface where the user can input what they want the program to do. 
-  6. Code for the candle stick graph and making the graph interactive. 
+  3. Code to create the linear regression in obtaining the weights for each respective variables
+  4. Code to create the toggle bar for the user interface input
+  5. Code to create the interactive bar graph where it also displays the summary of the players
   
 - Provide low-fidelity prototypes (e.g. _sketches_ on paper) in the **Appendix** of:
     - Visualisations
         - What kinds of graphs will you use?
+        We will use a horizontal bar graph where the y-axis contains the player's names and the x-axis contains the predicted percentage scores. We will put a picture of the athlete on the right side of their respective bars. The user will be able to interact with the graph by toggling on the face of the athlete and a word cloud will appear. The word cloud will consist of the google trending discussions on the athlete.
         - Label axes, provide a title, and mention any interactivity.
     - Interface
         - All projects need a Shiny Application.
         - Sketch how a user will work with the shiny application.
+        ![Visualization](Low_Fidelity.jpeg)
+
 - What have you done or learned so far for the project? 
+We have learned that we need to gather the statistical player data and filter them so that the we have relevant data. We need to gather the variables and do regression to determine weights of each variables. We need to gather data on player discussion trends to project it in the graph. We also need to create a user interface where the we get the user input data and graph the predicted results as well as the player statistics.
 
 We are primarily wanting to ensure that your project has met the criterion
 of the data science pipeline. In essence, we want to see evidence that your
