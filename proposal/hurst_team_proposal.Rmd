@@ -222,6 +222,13 @@ entries. Generally, this sketch seeks to contain all of your _planning_ informat
     - For example, `read_data("hospital_data.csv")` must be called before `tidy_hospital()`, et cetera.
 - Provide a sample of the data set you intend to use (~10 observations).
 
+```{r}
+example = read.csv("example.csv")
+print(example)
+```
+
+
+
 If you used previous code chunks within the document, this information can
 be dynamically retrieved and embedded.
 
