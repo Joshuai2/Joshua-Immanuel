@@ -178,7 +178,8 @@ a project management overview of *who* on your team will be doing *what* and *wh
 by answering:
 
 - Is this project able to be completed before the end of the semester?
-It should be - while the data set is large, outside of the resoure requirement it should not be overly difficult to implement this specific idea. We will need to familiarize ourself with the specific data used here - lots of unique compiled stats are used in basketball as opposed to the typical counting stats. 
+
+It should be - while the data set is large, outside of the resource requirement, it should not be overly difficult to implement this specific idea. We will need to familiarize ourself with the specific data used here - lots of unique compiled stats are used in basketball as opposed to the typical counting stats. 
 
 - What steps must occur to complete the project before the end of the semester?
 
