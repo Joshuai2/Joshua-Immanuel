@@ -1,16 +1,17 @@
 ---
-title: "A Descriptive Title Here: Be Creative"
-subtitle: "STAT 385 FA2018 - Team Rebel"
+title: "Trust the pRocess: NBA Award Predictions"
+subtitle: "STAT 385 SP2019 - Team Hurst"
 abstract: |
-          | This is the abstract. It should probably be at most about five 
-          | sentences. The abstract should briefly explain what you are doing,
-          | why you are doing it, and what you hope to gain from it.
-          | Reading only the abstract, the reader should have a good idea 
-          | about what to expect from the rest of the document.
-date: "November 13, 2018"
+          | This project will involve looking at 30 years of individual NBA
+          | player statistics. We will develop a number of new advanced analytics
+          | and statistics to determine player efficient and value.
+          | Using these numbers, we will rank players and determine
+          | who should win prominent NBA awards. We will visualize these results
+          | using bar graphs and sentiment analysis.
+date: "March 15, 2019"
 author:
   - Ajay Dugar
-  - Han Solo
+  - Eric Qian
   - Luke Skywalker
   - Lando Calrissian
 bibliography: bibliography.bib
@@ -186,17 +187,16 @@ by answering:
 
 # Conclusion
 
-The **Conclusion** section provides a summary of the entire proposal. This acts
-as the final paragraph that can be used to justify the work being proposed.
-In general, this means you should make one last push to identify the problem,
-potential solution, and its novelty.
+If you can accurately predict NBA awards, there is significant money to be made
+betting on winners of these awards. Additionally, by looking at this topic,
+NBA teams can get a better idea of what a winning player looks like, and can
+construct teams accordingly.
 
-If a group's project is well written, uses thoughtful and creative approaches,
-and is sufficiently interesting you may be asked to have your work "published"
-as an example for future students. **All group members will have to agree to
-publication.** You may also be asked to make edits before publication, but you 
-should be sure to **proofread** and **spellcheck** your work before your
-initial submission.
+This project will involve looking at 30 years of individual NBA player statistics. 
+We will develop a number of new advanced analytics and statistics to determine 
+player efficient and value. Using these numbers, we will rank players and determine
+who should win prominent NBA awards. We will visualize these results using bar graphs 
+and sentiment analysis.
 
 \newpage
 
