@@ -2,18 +2,15 @@
 title: "Trust the pRocess: NBA Award Predictions"
 subtitle: "STAT 385 SP2019 - Team Hurst"
 abstract: |
-          | This project will involve looking at 30 years of individual NBA
-          | player statistics. We will develop a number of new advanced analytics
-          | and statistics to determine player efficient and value.
-          | Using these numbers, we will rank players and determine
-          | who should win prominent NBA awards. We will visualize these results
-          | using bar graphs and sentiment analysis.
+          | This project will involve looking at 30 years of individual NBA player statistics. We will develop a number of new advanced analytics and statistics to determine player efficient and value. Using these numbers, we will rank players and determine who should win prominent NBA awards. We will visualize these results using bar graphs and sentiment analysis.
+          |
+          
 date: "March 15, 2019"
 author:
   - Ajay Dugar
   - Eric Qian
-  - Luke Skywalker
-  - Lando Calrissian
+  - Joshua Immanuel
+  - Bhanuchandra Kappala
 bibliography: bibliography.bib
 output: 
   bookdown::pdf_document2
@@ -35,7 +32,7 @@ knitr::opts_chunk$set(
 
 ```{r install-and-load-packages, include = FALSE, eval=FALSE}
 # All packages needed should be loaded in this chunk
-pkg_list = c('knitr', 'kableExtra', 'magrittr')
+pkg_list = c('knitr', 'kableExtra', 'magrittr', 'bookdown')
 
 # Determine what packages are NOT installed already.
 to_install_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
@@ -59,7 +56,7 @@ your report. Do not mistake the length of this document as an example of the
 length of a proper report. Length is not important. Communicating your idea 
 in a concise but complete manner is important. The goal of the proposal is to capture details found in Figure \@ref(fig:data-science-workflow).
 
-```{r data-science-workflow, out.width = "250px", fig.cap = "Data science workflow emphasized in R4DS. The photo has been reduced using chunk size options.", fig.pos = 'H'}
+```{r data-science-workflow, out.width = "250px", fig.cap = "Data science workflow emphasized in R4DS. The photo has been reduced using chunk size options."}
 knitr::include_graphics("images/data-science.png")
 ```
 
@@ -76,47 +73,47 @@ that the manager is knowledgeable in base R concepts. Make sure to answer the
 following questions:
 
 - What problem or topic are you addressing?
-  We are predicting are ask and bid price predicting.
   
-- Why is it interesting or important? In particular, what evidence supports this   conclusion?
-  Valueing assets are important. Being able to accurately price assets is one of the most fundamental skills in finance. Being able to do so is tremendously profitable. Many different subjects (math [Differential equations, Black-Scholes], physics [Brownian motion], engineering [signal processing], etc.) can be applied to finance, and this field is relatively young (<25 years old) and is growing. Many interesting and unsolved problems require statistical analysis, which is why we chose this project.
+  We are predicting NBA award winners and looking back at previous award winners and determining the validity of their candidacy.
+  
+- Why is it interesting or important? In particular, what evidence supports this conclusion?
+  
+  Valuing player assets are important. Being able to accurately determine player value is one of the most fundamental skills in basketball front offices. Being able to do so accurately can be the difference between winning and losing. Many different subjects (statistitcs, differential equations, analytics) can be applied to these problems. With the success of Daryl Morey and Sam Hinkie, we see that these approaches have been successful in the NBA. Many interesting and unsolved issues in the NBA require statistical analysis, which is why we chose this project.
   
 - Cite papers or reputable sources that back up this claim. (You may want to find - material using Google Scholar.)
-<https://dichgiacamchi.files.wordpress.com/2015/01/the_misbehavior_of_markets_-_benoit_mandelbrot.pdf>
-<https://www.e-reading.club/bookreader.php/133361/The_Intelligent_Investor.pdf>
-<http://site.iugaza.edu.ps/wdaya/files/2013/03/A-Random-Walk-Down-Wall-Street.pdf>
+<http://www.basketballanalyticsbook.com/>
+<https://www.nbastuffer.com/analytics-101/>
+<https://squared2020.com/>
 
 - Where did the problem or topic come from?
-Prior research into this field and academic curiousity led us to this topic. We wanted to know if we coulduse a variety of variables to accurately predict future stock prices.
+
+Our shared passion of basketball and the NBA led us to this topic. This is a topic that some of us have talked about and  previous academic curiousity have led us to this topic. We wanted to know if we could use a variety of variables to accurately predict NBA Award winners.
 
 - What is your idea for addressing the problem or topic?
-First, find and clean minute-by-minute data from the stocks making up an exchange-traded fund (ETF). Then train a linear model based on a variety of variables by minimizing MSE. Finally, test its predictive power on a series of stocks and visualize our results.
+
+First, find and clean NBA player data. Then create a series of advanced metrics to measure player performances. Train a model that utilizes these metrics to correlate them with team success. Finally, calculate total offensive value, total defensive value, and total overall value to determine player awards. Finally, test its predictive power on a series of previous award winners and visualize our results.
 
 - How does your idea match with the course’s focus on statistical programming?
+
 We will be dealing with large datasets, validating data, and building statistical models. All of these skills form the foundations of statistical programming and we will apply what we have learned in our project.
 
 -What is our data? Where did it come from? How will it be useful in answering your problem?
-Our training set will be minute-by-minute data from the QTEC ETF, which comes from FactSet, a financial data service. Our testing data will be minute-by-minute data from IBM, which also comes from FactSet. The short time period for our data points will allow us for a greater degree of accuracy and precision in the evaluation of our model.
 
-<https://finance.yahoo.com/quote/QTEC/options?p=QTEC&.tsrc=fin-srch>
-<https://finance.yahoo.com/quote/IBM/options?p=IBM&.tsrc=fin-srch>
+Our data will come from the official NBA website. It will be 30 years of individual player data. The long time period and amount of data for our data points will allow us for a greater degree of accuracy and precision in the evaluation of our model.
+
+<https://stats.nba.com/>
 
 # Related Work
-
-The **Related Work** section must provide an overview of pre-existing solutions.
-In essence, please credit those who enabled you to consider embarking on this 
-project, or as Issac Newton in [a letter to Robert Hooke on 15 February 1676](http://www.newtonproject.ox.ac.uk/view/texts/normalized/OTHE00101) more
-aptly put it:
 
 Address the following questions:
 
 - What other ideas have been attempted?
+
 While not specifically related to this project, the application of sabermetrics has become a point of interest for many baseball teams. Likewise, we have began to see this same transition in basketball analytics. The long term view of teams that have embraced analytics has been very good: the Philadelphia 76ers and Houston Rockets are both top seeded teams that have a significant chance at being the Championship team. While we haven't seen rigorous academic analysis of predicting NBA awards, there have been some implementations done by various individuals. There are also award trackers that just use raw data - specifically VORP (Value over Replacement Player) and PER (Player Efficiency Rating) and the player with the highest value is predicted to win. While these ways of predicting awards works somewhat well, they tend to have problems undervaluing certain players (the inventor of PER notes that it is not an end all metric - it rewards inefficient shooting and doesn't sufficiently reward effective defense) so our idea will be unique.
 
 - Why is your team's idea original compared to prior work?
 
-A lot of the statistics in use with modern publications are based on the research of one individual: Daryl Morey. We will derive our own variables and determine how impactful they are in determining wins using a regression  model. 
-
+A lot of the statistics in use with modern publications are based on the research of one individual: Daryl Morey. We will derive our own variables and determine how impactful they are in determining wins using a regression  model. By doing so, we will establish other variables and metrics that may be better suited for different situations and will allow for better comparison of players across time periods and eras.
 
 # Methods
 
@@ -154,14 +151,16 @@ To satisfy this section, provide detailed responses for the following:
 - Provide low-fidelity prototypes (e.g. _sketches_ on paper) in the **Appendix** of:
     - Visualisations
         - What kinds of graphs will you use?
+        
         We will use a horizontal bar graph where the y-axis contains the player's names and the x-axis contains the predicted percentage scores. We will put a picture of the athlete on the right side of their respective bars. The user will be able to interact with the graph by toggling on the face of the athlete and a word cloud will appear. The word cloud will consist of the google trending discussions on the athlete.
         - Label axes, provide a title, and mention any interactivity.
     - Interface
         - All projects need a Shiny Application.
         - Sketch how a user will work with the shiny application.
-        ![Visualization](Low_Fidelity.jpeg)
+        ![Visualization](Low Fidelity Model.jpeg)
 
 - What have you done or learned so far for the project? 
+
 We have learned that we need to gather the statistical player data and filter them so that the we have relevant data. We need to gather the variables and do regression to determine weights of each variables. We need to gather data on player discussion trends to project it in the graph. We also need to create a user interface where the we get the user input data and graph the predicted results as well as the player statistics.
 
 We are primarily wanting to ensure that your project has met the criterion
@@ -243,7 +242,7 @@ be dynamically retrieved and embedded.
 ```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE}
 ```
 
-```{r hitters-data}
+```{r hitters-data, eval=FALSE}
 kable(
   head(mtcars, 20),
   format = "latex",
@@ -253,7 +252,7 @@ kable(
   kable_styling(latex_options = c("striped", "scale_down"))
 ```
 
-```{r wage-data}
+```{r wage-data, eval=FALSE}
 kable(
   head(mtcars, 20),
   format = "latex",

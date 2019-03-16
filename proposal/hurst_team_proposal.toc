@@ -1,0 +1,11 @@
+\contentsline {section}{\numberline {1}Instructions}{2}{section.1}
+\contentsline {section}{\numberline {2}Introduction}{2}{section.2}
+\contentsline {section}{\numberline {3}Related Work}{3}{section.3}
+\contentsline {section}{\numberline {4}Methods}{3}{section.4}
+\contentsline {section}{\numberline {5}Feasibility}{6}{section.5}
+\contentsline {section}{\numberline {6}Conclusion}{6}{section.6}
+\contentsline {section}{\numberline {7}Appendix}{7}{section.7}
+\contentsline {subsection}{\numberline {7.1}Formatting Notes}{8}{subsection.7.1}
+\contentsline {subsubsection}{\numberline {7.1.1}\texttt {R} Code and \texttt {rmarkdown}}{8}{subsubsection.7.1.1}
+\contentsline {subsubsection}{\numberline {7.1.2}LaTeX}{9}{subsubsection.7.1.2}
+\contentsline {section}{\numberline {8}References}{10}{section.8}
