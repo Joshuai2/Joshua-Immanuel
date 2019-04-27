@@ -31,8 +31,6 @@ for (i in years){
   assign(paste0("players_", i), cbind(NBAPerGameAdvStatistics(season = i), NBAPerGameStatistics(season = i)))
 }
 
-asdf = NBAPerGameStatisticsPer100Poss(season = 2019)
-
 ```
 
 
