@@ -15,7 +15,7 @@ always_allow_html: yes # required for PDF
 
 ```{r,echo=FALSE}
 
-pkg_list = c("ggplot2", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "plyr")
+pkg_list = c("ggplot2", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "plyr", "twitteR")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -32,7 +32,11 @@ for (i in years){
   assign(paste0("players_", i), cbind(NBAPerGameAdvStatistics(season = i), NBAPerGameStatistics(season = i)))
 }
 
-asdf = NBAPerGameStatisticsPer100Poss(season = 2019)
+for (i in years){
+  
+  assign(paste0("players_", i),  get(paste0("players_", i))[!duplicated(get(paste0("players_", i))$rk), ])
+}
+
 
 ```
 
