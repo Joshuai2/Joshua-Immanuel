@@ -27,14 +27,23 @@ loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
 ```{r}
 years = (1989:2019)
 
+#Combining raw and advanced statistics
 for (i in years){
   
   assign(paste0("players_", i), cbind(NBAPerGameAdvStatistics(season = i), NBAPerGameStatistics(season = i)))
 }
 
+#removing the players that are duplicated
 for (i in years){
   
   assign(paste0("players_", i),  get(paste0("players_", i))[!duplicated(get(paste0("players_", i))$rk), ])
+}
+
+#Removing players who haven't played a minimum of 70% of the games in the season
+for (i in years){
+  
+  assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > 0.7*max(get(paste0("players_", i))$g),])
+  
 }
 
 
