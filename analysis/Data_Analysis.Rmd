@@ -31,23 +31,326 @@ years = (1989:2019)
 for (i in years){
   
   assign(paste0("players_", i), cbind(NBAPerGameAdvStatistics(season = i), NBAPerGameStatistics(season = i)))
-}
-
-#removing the players that are duplicated
-for (i in years){
   
+  #remove duplicate columns
+  assign(paste0("players_", i), get(paste0("players_", i))[, !duplicated(colnames(get(paste0("players_", i))))])
+  
+  #removing the players that are duplicated
   assign(paste0("players_", i),  get(paste0("players_", i))[!duplicated(get(paste0("players_", i))$rk), ])
+  
+  #Removing players who haven't played a minimum of 70% of the games in the season
+  assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > 0.7*max(get(paste0("players_", i))$g),])
+
 }
 
-#Removing players who haven't played a minimum of 70% of the games in the season
-for (i in years){
-  
-  assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > 0.7*max(get(paste0("players_", i))$g),])
-  
-}
 
 
 ```
 
+```{r}
+
+# NBA Award Winners
+
+players_1989 <- within(players_1989, mvp <- ifelse(players_1989$player == "Magic Johnson", 1, 0)) 
+players_1989 <- within(players_1989, roy <- ifelse(players_1989$player == "Mitch Richmond", 1, 0)) 
+players_1989 <- within(players_1989, dpoy <- ifelse(players_1989$player == "Mark Eaton", 1, 0)) 
+players_1989 <- within(players_1989, smoy <- ifelse(players_1989$player == "Eddie Johnson", 1, 0)) 
+players_1989 <- within(players_1989, mip <- ifelse(players_1989$player == "Kevin Johnson", 1, 0)) 
+
+players_1990 <- within(players_1990, mvp <- ifelse(players_1990$player == "Magic Johnson", 1, 0)) 
+players_1990 <- within(players_1990, roy <- ifelse(players_1990$player == "David Robinson", 1, 0)) 
+players_1990 <- within(players_1990, dpoy <- ifelse(players_1990$player == "Dennis Rodman", 1, 0)) 
+players_1990 <- within(players_1990, smoy <- ifelse(players_1990$player == "Ricky Pierce", 1, 0)) 
+players_1990 <- within(players_1990, mip <- ifelse(players_1990$player == "Rony Seikaly", 1, 0))
+
+players_1991 <- within(players_1991, mvp <- ifelse(players_1991$player == "Michael Jordan", 1, 0)) 
+players_1991 <- within(players_1991, roy <- ifelse(players_1991$player == "Derrick Coleman", 1, 0)) 
+players_1991 <- within(players_1991, dpoy <- ifelse(players_1991$player == "Dennis Rodman", 1, 0)) 
+players_1991 <- within(players_1991, smoy <- ifelse(players_1991$player == "Detlef Schrempf", 1, 0)) 
+players_1991 <- within(players_1991, mip <- ifelse(players_1991$player == "Scott Skiles", 1, 0))
+
+players_1992 <- within(players_1992, mvp <- ifelse(players_1992$player == "Michael Jordan", 1, 0)) 
+players_1992 <- within(players_1992, roy <- ifelse(players_1992$player == "Larry Johnson", 1, 0)) 
+players_1992 <- within(players_1992, dpoy <- ifelse(players_1992$player == "David Robinson", 1, 0)) 
+players_1992 <- within(players_1992, smoy <- ifelse(players_1992$player == "Detlef Schrempf", 1, 0)) 
+players_1992 <- within(players_1992, mip <- ifelse(players_1992$player == "Pervis Ellison", 1, 0))
+
+players_1993 <- within(players_1993, mvp <- ifelse(players_1993$player == "Charles Barkley", 1, 0)) 
+players_1993 <- within(players_1993, roy <- ifelse(players_1993$player == "Shaquille O'Neal", 1, 0)) 
+players_1993 <- within(players_1993, dpoy <- ifelse(players_1993$player == "Hakeem Olajuwon", 1, 0)) 
+players_1993 <- within(players_1993, smoy <- ifelse(players_1993$player == "Clifford Robinson", 1, 0)) 
+players_1993 <- within(players_1993, mip <- ifelse(players_1993$player == "Mahmoud Abdul-Rauf", 1, 0))
+
+players_1994 <- within(players_1994, mvp <- ifelse(players_1994$player == "Hakeem Olajuwon", 1, 0)) 
+players_1994 <- within(players_1994, roy <- ifelse(players_1994$player == "Chris Webber", 1, 0)) 
+players_1994 <- within(players_1994, dpoy <- ifelse(players_1994$player == "Hakeem Olajuwon", 1, 0)) 
+players_1994 <- within(players_1994, smoy <- ifelse(players_1994$player == "Dell Curry", 1, 0)) 
+players_1994 <- within(players_1994, mip <- ifelse(players_1994$player == "Don MacLean", 1, 0))
+
+players_1995 <- within(players_1995, mvp <- ifelse(players_1995$player == "David Robinson", 1, 0)) 
+players_1995 <- within(players_1995, roy <- ifelse(players_1995$player == "Grant Hill" | players_1995$player == "Jason Kidd", 1, 0)) 
+players_1995 <- within(players_1995, dpoy <- ifelse(players_1995$player == "Dikembe Mutombo", 1, 0)) 
+players_1995 <- within(players_1995, smoy <- ifelse(players_1995$player == "Anthony Mason", 1, 0)) 
+players_1995 <- within(players_1995, mip <- ifelse(players_1995$player == "Dana Barros", 1, 0))
+
+players_1996 <- within(players_1996, mvp <- ifelse(players_1996$player == "Michael Jordan", 1, 0)) 
+players_1996 <- within(players_1996, roy <- ifelse(players_1996$player == "Damon Stoudamire", 1, 0)) 
+players_1996 <- within(players_1996, dpoy <- ifelse(players_1996$player == "Gary Payton", 1, 0)) 
+players_1996 <- within(players_1996, smoy <- ifelse(players_1996$player == "Toni Kukoc", 1, 0)) 
+players_1996 <- within(players_1996, mip <- ifelse(players_1996$player == "Gheorghe Muresan", 1, 0))
+
+players_1997 <- within(players_1997, mvp <- ifelse(players_1997$player == "Karl Malone", 1, 0)) 
+players_1997 <- within(players_1997, roy <- ifelse(players_1997$player == "Allen Iverson", 1, 0)) 
+players_1997 <- within(players_1997, dpoy <- ifelse(players_1997$player == "Dikembe Mutombo", 1, 0)) 
+players_1997 <- within(players_1997, smoy <- ifelse(players_1997$player == "John Starks", 1, 0)) 
+players_1997 <- within(players_1997, mip <- ifelse(players_1997$player == "Isaac Austin", 1, 0))
+
+players_1998 <- within(players_1998, mvp <- ifelse(players_1998$player == "Michael Jordon", 1, 0)) 
+players_1998 <- within(players_1998, roy <- ifelse(players_1998$player == "Tim Duncan", 1, 0)) 
+players_1998 <- within(players_1998, dpoy <- ifelse(players_1998$player == "Dikembe Mutombo", 1, 0)) 
+players_1998 <- within(players_1998, smoy <- ifelse(players_1998$player == "Danny Manning", 1, 0)) 
+players_1998 <- within(players_1998, mip <- ifelse(players_1998$player == "Alan Henderson", 1, 0))
+
+players_1999 <- within(players_1999, mvp <- ifelse(players_1999$player == "Karl Malone", 1, 0)) 
+players_1999 <- within(players_1999, roy <- ifelse(players_1999$player == "Vince Carter", 1, 0)) 
+players_1999 <- within(players_1999, dpoy <- ifelse(players_1999$player == "Alonzo Mourning", 1, 0)) 
+players_1999 <- within(players_1999, smoy <- ifelse(players_1999$player == "Darrell Armstrong", 1, 0)) 
+players_1999 <- within(players_1999, mip <- ifelse(players_1999$player == "Darrell Armstrong", 1, 0))
+
+
+players_2000 <- within(players_2000, mvp <- ifelse(players_2000$player == "Shaquille O'Neal", 1, 0)) 
+players_2000 <- within(players_2000, roy <- ifelse(players_2000$player == "Elton Brand" | players_2000$player == "Steve Francis", 1, 0)) 
+players_2000 <- within(players_2000, dpoy <- ifelse(players_2000$player == "Alonzo Mourning", 1, 0)) 
+players_2000 <- within(players_2000, smoy <- ifelse(players_2000$player == "Rodney Rogers", 1, 0)) 
+players_2000 <- within(players_2000, mip <- ifelse(players_2000$player == "Jalen Rose", 1, 0))
+
+
+players_2001 <- within(players_2001, mvp <- ifelse(players_2001$player == "Allen Iverson", 1, 0)) 
+players_2001 <- within(players_2001, roy <- ifelse(players_2001$player == "Mike Miller", 1, 0)) 
+players_2001 <- within(players_2001, dpoy <- ifelse(players_2001$player == "Dikembe Mutombo", 1, 0)) 
+players_2001 <- within(players_2001, smoy <- ifelse(players_2001$player == "Aaron McKie", 1, 0)) 
+players_2001 <- within(players_2001, mip <- ifelse(players_2001$player == "Tracy McGrady", 1, 0))
+
+players_2002 <- within(players_2002, mvp <- ifelse(players_2002$player == "Tim Duncan", 1, 0)) 
+players_2002 <- within(players_2002, roy <- ifelse(players_2002$player == "Pau Gasol", 1, 0)) 
+players_2002 <- within(players_2002, dpoy <- ifelse(players_2002$player == "Ben Wallace", 1, 0)) 
+players_2002 <- within(players_2002, smoy <- ifelse(players_2002$player == "Corliss Williamson", 1, 0)) 
+players_2002 <- within(players_2002, mip <- ifelse(players_2002$player == "Jermaine O'Neal", 1, 0))
+
+
+players_2003 <- within(players_2003, mvp <- ifelse(players_2003$player == "Tim Duncan", 1, 0)) 
+players_2003 <- within(players_2003, roy <- ifelse(players_2003$player == "Amar'e Stoudemire", 1, 0)) 
+players_2003 <- within(players_2003, dpoy <- ifelse(players_2003$player == "Ben Wallace", 1, 0)) 
+players_2003 <- within(players_2003, smoy <- ifelse(players_2003$player == "Bobby Jackson", 1, 0)) 
+players_2003 <- within(players_2003, mip <- ifelse(players_2003$player == "Gilbert Arenas", 1, 0))
+
+players_2004 <- within(players_2004, mvp <- ifelse(players_2004$player == "Kevin Garnett", 1, 0)) 
+players_2004 <- within(players_2004, roy <- ifelse(players_2004$player == "LeBron James", 1, 0)) 
+players_2004 <- within(players_2004, dpoy <- ifelse(players_2004$player == "Metta World Peace", 1, 0)) 
+players_2004 <- within(players_2004, smoy <- ifelse(players_2004$player == "Antawn Jamison", 1, 0)) 
+players_2004 <- within(players_2004, mip <- ifelse(players_2004$player == "Zach Randolph", 1, 0))
+
+players_2005 <- within(players_2005, mvp <- ifelse(players_2005$player == "Steve Nash", 1, 0)) 
+players_2005 <- within(players_2005, roy <- ifelse(players_2005$player == "Emeka Okafor", 1, 0)) 
+players_2005 <- within(players_2005, dpoy <- ifelse(players_2005$player == "Ben Wallace", 1, 0)) 
+players_2005 <- within(players_2005, smoy <- ifelse(players_2005$player == "Ben Gordon", 1, 0)) 
+players_2005 <- within(players_2005, mip <- ifelse(players_2005$player == "Bobby Simmons", 1, 0))
+
+players_2006 <- within(players_2006, mvp <- ifelse(players_2006$player == "Steve Nash", 1, 0)) 
+players_2006 <- within(players_2006, roy <- ifelse(players_2006$player == "Chris Paul", 1, 0)) 
+players_2006 <- within(players_2006, dpoy <- ifelse(players_2006$player == "Ben Wallace", 1, 0)) 
+players_2006 <- within(players_2006, smoy <- ifelse(players_2006$player == "Mike Miller", 1, 0)) 
+players_2006 <- within(players_2006, mip <- ifelse(players_2006$player == "Boris Diaw", 1, 0))
+
+players_2007 <- within(players_2007, mvp <- ifelse(players_2007$player == "Dirk Nowitzki", 1, 0)) 
+players_2007 <- within(players_2007, roy <- ifelse(players_2007$player == "Brandon Roy", 1, 0)) 
+players_2007 <- within(players_2007, dpoy <- ifelse(players_2007$player == "Marcus Camby", 1, 0)) 
+players_2007 <- within(players_2007, smoy <- ifelse(players_2007$player == "Leandro Barbosa", 1, 0)) 
+players_2007 <- within(players_2007, mip <- ifelse(players_2007$player == "Monta Ellis", 1, 0))
+
+players_2008 <- within(players_2008, mvp <- ifelse(players_2008$player == "Kobe Bryant", 1, 0)) 
+players_2008 <- within(players_2008, roy <- ifelse(players_2008$player == "Kevin Durant", 1, 0)) 
+players_2008 <- within(players_2008, dpoy <- ifelse(players_2008$player == "Kevin Garnett", 1, 0)) 
+players_2008 <- within(players_2008, smoy <- ifelse(players_2008$player == "Manu Ginobili", 1, 0)) 
+players_2008 <- within(players_2008, mip <- ifelse(players_2008$player == "Hedo Turkoglu", 1, 0))
+
+players_2009 <- within(players_2009, mvp <- ifelse(players_2009$player == "LeBron James", 1, 0)) 
+players_2009 <- within(players_2009, roy <- ifelse(players_2009$player == "Derrick Rose", 1, 0)) 
+players_2009 <- within(players_2009, dpoy <- ifelse(players_2009$player == "Dwight Howard", 1, 0)) 
+players_2009 <- within(players_2009, smoy <- ifelse(players_2009$player == "Jason Terry", 1, 0)) 
+players_2009 <- within(players_2009, mip <- ifelse(players_2009$player == "Danny Granger", 1, 0))
+
+players_2010 <- within(players_2010, mvp <- ifelse(players_2010$player == "LeBron James", 1, 0)) 
+players_2010 <- within(players_2010, roy <- ifelse(players_2010$player == "Tyreke Evans", 1, 0)) 
+players_2010 <- within(players_2010, dpoy <- ifelse(players_2010$player == "Dwight Howard", 1, 0)) 
+players_2010 <- within(players_2010, smoy <- ifelse(players_2010$player == "Jamal Crawford", 1, 0)) 
+players_2010 <- within(players_2010, mip <- ifelse(players_2010$player == "Aaron Brooks", 1, 0))
+
+players_2011 <- within(players_2011, mvp <- ifelse(players_2011$player == "Derrick Rose", 1, 0)) 
+players_2011 <- within(players_2011, roy <- ifelse(players_2011$player == "Blake Griffin", 1, 0)) 
+players_2011 <- within(players_2011, dpoy <- ifelse(players_2011$player == "Dwight Howard", 1, 0)) 
+players_2011 <- within(players_2011, smoy <- ifelse(players_2011$player == "Lamar Odom", 1, 0)) 
+players_2011 <- within(players_2011, mip <- ifelse(players_2011$player == "Kevin Love", 1, 0))
+
+players_2012 <- within(players_2012, mvp <- ifelse(players_2012$player == "LeBron James", 1, 0)) 
+players_2012 <- within(players_2012, roy <- ifelse(players_2012$player == "Kyrie Irving", 1, 0)) 
+players_2012 <- within(players_2012, dpoy <- ifelse(players_2012$player == "Tyson Chandler", 1, 0)) 
+players_2012 <- within(players_2012, smoy <- ifelse(players_2012$player == "James Harden", 1, 0)) 
+players_2012 <- within(players_2012, mip <- ifelse(players_2012$player == "Ryan Anderson", 1, 0))
+
+players_2013 <- within(players_2013, mvp <- ifelse(players_2013$player == "LeBron James", 1, 0)) 
+players_2013 <- within(players_2013, roy <- ifelse(players_2013$player == "Damian Lillard", 1, 0)) 
+players_2013 <- within(players_2013, dpoy <- ifelse(players_2013$player == "Tyson Chandler", 1, 0)) 
+players_2013 <- within(players_2013, smoy <- ifelse(players_2013$player == "Marc Gasol", 1, 0)) 
+players_2013 <- within(players_2013, mip <- ifelse(players_2013$player == "J.R. Smith", 1, 0))
+
+players_2014 <- within(players_2014, mvp <- ifelse(players_2014$player == "Kevin Durant", 1, 0)) 
+players_2014 <- within(players_2014, roy <- ifelse(players_2014$player == "Michael Carter-Williams", 1, 0)) 
+players_2014 <- within(players_2014, dpoy <- ifelse(players_2014$player == "Joakim Noah", 1, 0)) 
+players_2014 <- within(players_2014, smoy <- ifelse(players_2014$player == "Jamal Crawford", 1, 0)) 
+players_2014 <- within(players_2014, mip <- ifelse(players_2014$player == "Goran Dragic", 1, 0))
+
+players_2015 <- within(players_2015, mvp <- ifelse(players_2015$player == "Stephen Curry", 1, 0)) 
+players_2015 <- within(players_2015, roy <- ifelse(players_2015$player == "Andrew Wiggins", 1, 0)) 
+players_2015 <- within(players_2015, dpoy <- ifelse(players_2015$player == "Kawhi Leonard", 1, 0)) 
+players_2015 <- within(players_2015, smoy <- ifelse(players_2015$player == "Lou Williams", 1, 0)) 
+players_2015 <- within(players_2015, mip <- ifelse(players_2015$player == "Jimmy Butler", 1, 0))
+
+players_2016 <- within(players_2016, mvp <- ifelse(players_2016$player == "Stephen Curry", 1, 0)) 
+players_2016 <- within(players_2016, roy <- ifelse(players_2016$player == "Karl-Anthony Towns", 1, 0)) 
+players_2016 <- within(players_2016, dpoy <- ifelse(players_2016$player == "Kawhi Leonard", 1, 0)) 
+players_2016 <- within(players_2016, smoy <- ifelse(players_2016$player == "Jamal Crawford", 1, 0)) 
+players_2016 <- within(players_2016, mip <- ifelse(players_2016$player == "CJ McCollum", 1, 0))
+
+players_2017 <- within(players_2017, mvp <- ifelse(players_2017$player == "Russell Westbrook", 1, 0)) 
+players_2017 <- within(players_2017, roy <- ifelse(players_2017$player == "Malcolm Brogdon", 1, 0)) 
+players_2017 <- within(players_2017, dpoy <- ifelse(players_2017$player == "Draymond Green", 1, 0)) 
+players_2017 <- within(players_2017, smoy <- ifelse(players_2017$player == "Eric Gordon", 1, 0)) 
+players_2017 <- within(players_2017, mip <- ifelse(players_2017$player == "Giannis Antetokounmpo", 1, 0))
+
+players_2018 <- within(players_2018, mvp <- ifelse(players_2018$player == "James Harden", 1, 0)) 
+players_2018 <- within(players_2018, roy <- ifelse(players_2018$player == "Ben Simmons", 1, 0)) 
+players_2018 <- within(players_2018, dpoy <- ifelse(players_2018$player == "Rudy Gobert", 1, 0)) 
+players_2018 <- within(players_2018, smoy <- ifelse(players_2018$player == "Lou Williams", 1, 0)) 
+players_2018 <- within(players_2018, mip <- ifelse(players_2018$player == "Victor Oladipo", 1, 0))
+
+```
+
+
+```{r}
+
+year_names = c()
+
+for (i in years){
+  
+    year_names = c(year_names, paste0("players_", i))
+    
+}
+
+```
+
+```{r}
+
+#Trying to add dummy variables for position, having issues
+
+# for (i in year_names){
+#   
+#   i <- within(get(i), PG <- ifelse(get(i)$pos == "PG", 1,0))
+#   
+# }
+# 
+#   
+#   
+#   assign(get(paste0("players_", i))$PG, ifelse(get(paste0("players_", i))$pos == "PG", 1, 0))
+#   assign(get(paste0("players_", i))$SG, ifelse(get(paste0("players_", i))$pos == "SG", 1, 0))
+#   assign(get(paste0("players_", i))$SF, ifelse(get(paste0("players_", i))$pos == "SF", 1, 0))
+#   assign(get(paste0("players_", i))$PF, ifelse(get(paste0("players_", i))$pos == "PF", 1, 0))
+#   assign(get(paste0("players_", i))$C, ifelse(get(paste0("players_", i))$pos == "C", 1, 0))
+
+```
+
+```{r}
+
+for (i in year_names){
+  
+    assign(i, subset(get(i), select = -c(x, x_2) ))
+    
+}
+
+for (i in year_names){
+  
+    assign(i, subset(get(i), select = -c(tm, link) ))
+    
+}
+
+```
+
+
+```{r}
+#per + tspercent + x3par + ftr + orbpercent + drbpercent + trbpercent + astpercent + stlpercent + blkpercent + tovpercent + usgpercent + ows + dws + obpm + dbpm + vorp + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+```
+
+```{r}
+
+players_all = players_1989[FALSE,]
+
+for (i in year_names){
+  
+  players_all <- rbind(players_all, get(i))  
+  
+}
+
+```
+
+```{r}
+#mvp
+indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+
+object <- lm(mvp ~ 1, data = players_all)
+#swout_mvp <- step(object, scope = indep.vars, direction = "both")
+summary(swout_mvp)
+
+```
+
+```{r}
+#
+indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+
+object <- lm(roy ~ 1, data = players_all)
+#swout_roy <- step(object, scope = indep.vars, direction = "both")
+summary(swout_roy)
+
+```
+
+```{r}
+#
+indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+
+object <- lm(dpoy ~ 1, data = players_all)
+#swout_dpoy <- step(object, scope = indep.vars, direction = "both")
+summary(swout_dpoy)
+
+```
+
+```{r}
+#
+indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+
+object <- lm(smoy ~ 1, data = players_all)
+#swout_smoy <- step(object, scope = indep.vars, direction = "both")
+summary(swout_smoy)
+
+```
+
+
+```{r}
+#
+indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+
+object <- lm(mip ~ 1, data = players_all)
+#swout_mip <- step(object, scope = indep.vars, direction = "both")
+summary(swout_mip)
+
+```
 
 
