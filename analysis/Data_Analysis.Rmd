@@ -249,25 +249,6 @@ for (i in years){
 
 ```
 
-```{r}
-
-#Trying to add dummy variables for position, having issues
-
-# for (i in year_names){
-#   
-#   i <- within(get(i), PG <- ifelse(get(i)$pos == "PG", 1,0))
-#   
-# }
-# 
-#   
-#   
-#   assign(get(paste0("players_", i))$PG, ifelse(get(paste0("players_", i))$pos == "PG", 1, 0))
-#   assign(get(paste0("players_", i))$SG, ifelse(get(paste0("players_", i))$pos == "SG", 1, 0))
-#   assign(get(paste0("players_", i))$SF, ifelse(get(paste0("players_", i))$pos == "SF", 1, 0))
-#   assign(get(paste0("players_", i))$PF, ifelse(get(paste0("players_", i))$pos == "PF", 1, 0))
-#   assign(get(paste0("players_", i))$C, ifelse(get(paste0("players_", i))$pos == "C", 1, 0))
-
-```
 
 ```{r}
 
@@ -303,53 +284,101 @@ for (i in year_names){
 ```
 
 ```{r}
+
+players_all$PG = ifelse(players_all$pos == "PG", 1, 0)
+players_all$SG = ifelse(players_all$pos == "SG", 1, 0)
+players_all$SF = ifelse(players_all$pos == "SF", 1, 0)
+players_all$PF = ifelse(players_all$pos == "PF", 1, 0)
+players_all$C = ifelse(players_all$pos == "C", 1, 0)
+
+```
+
+
+
+```{r}
 #mvp
-indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+indep.vars_normal <- ~age + mp + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + ast + stl + blk + tov + pf + PG + SG + SF + PF + C 
 
-object <- lm(mvp ~ 1, data = players_all)
-#swout_mvp <- step(object, scope = indep.vars, direction = "both")
-summary(swout_mvp)
+indep.vars_advanced <- ~age + mp + per + tspercent + orbpercent + drbpercent + astpercent + blkpercent + tovpercent + usgpercent + ows + dws + PG + SG + SF + PF + C 
 
-```
+object <- glm(mvp ~ 1, family=binomial(link="logit"), data=players_all)
+#swout_mvp_normal <- step(object, scope = indep.vars_normal, direction = "both")
+#summary(swout_mvp_normal)
 
-```{r}
-#
-indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+#vcov(swout_mvp_normal)
 
-object <- lm(roy ~ 1, data = players_all)
-#swout_roy <- step(object, scope = indep.vars, direction = "both")
-summary(swout_roy)
+#swout_mvp_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+summary(swout_mvp_advanced) #better
 
-```
-
-```{r}
-#
-indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
-
-object <- lm(dpoy ~ 1, data = players_all)
-#swout_dpoy <- step(object, scope = indep.vars, direction = "both")
-summary(swout_dpoy)
+#vcov(swout_mvp_advanced)
 
 ```
 
 ```{r}
-#
-indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+#roy
 
-object <- lm(smoy ~ 1, data = players_all)
-#swout_smoy <- step(object, scope = indep.vars, direction = "both")
-summary(swout_smoy)
+object <- glm(roy ~ 1, family=binomial(link="logit"), data=players_all)
+#swout_roy_normal <- step(object, scope = indep.vars_normal, direction = "both")
+summary(swout_roy_normal) #better
+
+#vcov(swout_roy_normal)
+
+#swout_roy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+#summary(swout_roy_advanced)
+
+#vcov(swout_roy_advanced)
+
+```
+
+```{r}
+# dpoy
+
+object <- glm(dpoy ~ 1, family=binomial(link="logit"), data=players_all)
+#swout_dpoy_normal <- step(object, scope = indep.vars_normal, direction = "both")
+#summary(swout_dpoy_normal)
+
+#vcov(swout_dpoy_normal)
+
+#swout_dpoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+summary(swout_dpoy_advanced) #better
+
+#vcov(swout_dpoy_advanced)
+
+
+```
+
+```{r}
+#smoy
+
+object <- glm(smoy ~ 1, family=binomial(link="logit"), data=players_all)
+#swout_smoy_normal <- step(object, scope = indep.vars_normal, direction = "both")
+#summary(swout_smoy_normal)
+
+#vcov(swout_smoy_normal)
+
+#swout_smoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+summary(swout_smoy_advanced) #better
+
+#vcov(swout_smoy_advanced)
+
 
 ```
 
 
 ```{r}
-#
-indep.vars <- ~age + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
+# mip
 
-object <- lm(mip ~ 1, data = players_all)
-#swout_mip <- step(object, scope = indep.vars, direction = "both")
-summary(swout_mip)
+object <- glm(mip ~ 1, family=binomial(link="logit"), data=players_all)
+#swout_mip_normal <- step(object, scope = indep.vars_normal, direction = "both")
+summary(swout_mip_normal) #better
+
+#vcov(swout_mip_normal)
+
+
+#swout_mip_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+#summary(swout_mip_advanced)
+
+#vcov(swout_mip_advanced)
 
 ```
 
