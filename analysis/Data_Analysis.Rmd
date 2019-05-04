@@ -350,7 +350,7 @@ summary(swout_dpoy_advanced) #better
 ```{r}
 #smoy
 
-object <- glm(smoy ~ 1, family=binomial(link="logit"), data=players_all)
+object <- glm(smoy ~ 1, family=binomial(link="logit"), data=players_all[which(players_all$gs < 41),])
 #swout_smoy_normal <- step(object, scope = indep.vars_normal, direction = "both")
 #summary(swout_smoy_normal)
 
@@ -381,5 +381,74 @@ summary(swout_mip_normal) #better
 #vcov(swout_mip_advanced)
 
 ```
+
+```{r}
+
+#applying the model
+
+players_2019$PG = ifelse(players_2019$pos == "PG", 1, 0)
+players_2019$SG = ifelse(players_2019$pos == "SG", 1, 0)
+players_2019$SF = ifelse(players_2019$pos == "SF", 1, 0)
+players_2019$PF = ifelse(players_2019$pos == "PF", 1, 0)
+players_2019$C = ifelse(players_2019$pos == "C", 1, 0)
+
+```
+
+```{r}
+
+players_2019$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2019$per + 0.25109*players_2019$tovpercent + 0.56602*players_2019$dws))))
+
+players_2019$mvp_odds = players_2019$mvp/sum(players_2019$mvp)
+
+players_2019[with(players_2019, order(-mvp_odds)),]
+
+```
+
+```{r}
+
+rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$age + 0.0012159*rookies_2019$mp + 0.7284919*rookies_2019$orb + 0.4127871*rookies_2019$ast))))
+
+rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)
+
+players_2019 <- merge(players_2019, rookies_2019, all = TRUE)
+players_2019[is.na(players_2019)] <- 0
+
+
+players_2019[with(players_2019, order(-roy_odds)),]
+
+```
+
+
+```{r}
+
+players_2019$dpoy = as.numeric(1/(1+exp(-1*(-7.6440321 + 1.6298305*players_2019$dws + -0.3212441*players_2019$usgpercent + 0.3284959*players_2019$per + -0.0018602*players_2019$mp))))
+
+players_2019$dpoy_odds = players_2019$dpoy/sum(players_2019$dpoy)
+
+players_2019[with(players_2019, order(-dpoy_odds)),]
+
+```
+
+```{r}
+
+players_2019$smoy = ifelse(players_2019$gs < 41, as.numeric(1/(1+exp(-1*(-4.334e+01 + 4.575e-01*players_2019$usgpercent + 1.206e+00*players_2019$dws + -1.090e+00*players_2019$blkpercent + 4.005e+01*players_2019$tspercent + 2.762e-03*players_2019$mp)))), 0)
+
+players_2019$smoy_odds = players_2019$smoy/sum(players_2019$smoy)
+
+players_2019[with(players_2019, order(-smoy_odds)),]
+  
+```
+
+```{r}
+
+players_2019$mip = as.numeric(1/(1+exp(-1*(-5.4244556 + 0.8269561*players_2019$tov + -0.2037588*players_2019$age + 3.8753971*players_2019$x3p + -1.3835910*players_2019$x3pa))))
+
+players_2019$mip_odds = players_2019$mip/sum(players_2019$mip)
+
+players_2019[with(players_2019, order(-mip_odds)),]
+
+```
+
+
 
 
