@@ -15,7 +15,7 @@ always_allow_html: yes # required for PDF
 
 ```{r,echo=FALSE}
 
-pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr")
+pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -441,11 +441,29 @@ players_2019[with(players_2019, order(-smoy_odds)),]
 
 ```{r}
 
-players_2019$mip = as.numeric(1/(1+exp(-1*(-5.4244556 + 0.8269561*players_2019$tov + -0.2037588*players_2019$age + 3.8753971*players_2019$x3p + -1.3835910*players_2019$x3pa))))
+mip_2019_new = join(players_2019, players_2018, by = "player", type = "inner")
+mip_2019_old = join(players_2018, players_2019, by = "player", type = "inner")
 
-players_2019$mip_odds = players_2019$mip/sum(players_2019$mip)
+player = mip_2019_new$player
 
-players_2019[with(players_2019, order(-mip_odds)),]
+mip_2019 = data.frame(player)
+
+mip_2019$age = mip_2019_new$age
+mip_2019$tov = mip_2019_new$tov - mip_2019_old$tov
+mip_2019$x3p = mip_2019_new$x3p - mip_2019_old$x3p
+mip_2019$x3pa = mip_2019_new$x3pa - mip_2019_old$x3pa
+
+
+mip_2019$mip = as.numeric(1/(1+exp(-1*(-5.4244556 + 0.8269561*mip_2019$tov + -0.2037588*mip_2019$age + 3.8753971*mip_2019$x3p + -1.3835910*mip_2019$x3pa)))^5)
+
+mip_2019$mip_odds = mip_2019$mip/sum(mip_2019$mip)
+
+
+
+mip_2019[with(mip_2019, order(-mip_odds)),]
+
+
+radarchart(mip_2019[with(mip_2019, order(-mip_odds)),])
 
 ```
 
