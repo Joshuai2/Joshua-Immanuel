@@ -15,15 +15,15 @@ ui = fluidPage(
       numericInput(inputId = "year", label = ("Year (e.g. 1980)"), 
                    value = 2019, min = 1989, max = 2019),
       
-      actionButton("load", "Load Preview Awards")
+      actionButton("button", "Load Preview Awards")
     ),
     
     mainPanel(
       h3("Top Five Predictions"),
-      verbatimTextOutput("top_predictions"),
+      verbatimTextOutput("predictions")
       
-      h3("Radar Plot"),
-      plotOutout("radar")
+      #h3("Radar Plot"),
+      #plotOutout("radar")
     )
   )
 )
@@ -31,11 +31,18 @@ ui = fluidPage(
 # Define server logic ----
 server = function(input, output, session) {
   
-  active_awards = eventReactive(input$load, {
-    input$award
+  active_awards = eventReactive(input$button, {
+    switch(active_awards(), 
+           "MVP" = active_dataset()$mvp_odds,
+           "Rookie of the Year" = active_dataset()$roy_odds,
+           "Defensive Player of the Year" = active_dataset()$dpoy_odds,
+           "Sixth Man" = active_dataset()$smoy_odds
+           #"Most Improved Player" = active_dataset()[with(mip_2019, order(-mip_odds)),] different dataset
+    )
   })
   
-  active_dataset = eventReactive(input$load, {
+  #matching dataset year
+  active_dataset = eventReactive(input$button, {
     switch(paste0("players_", input$year),
            "players_1989" = players_1989,
            "players_1990" = players_1990,
@@ -67,16 +74,20 @@ server = function(input, output, session) {
            "players_2016" = players_2016,
            "players_2017" = players_2017,
            "players_2018" = players_2018,
-           "players_2019" = players_2019,
+           "players_2019" = players_2019
            
            )
   })
-  
-  output$top_predictions = renderPrint(
-    if(active_dataset() = players_2019){
-      
-    }
+  #fit_mvp = eventReactive(input$perform, ) if we can generalize the fit, then develop this
+
+  #create column for players and percentages
+  cleaning_data = eventReactive(input$button, {
+    cbind(active_dataset$player, active_awards())
+  })
+  output$predictions = renderPrint(
+    cleaning_data()
   )
+  
   
 }
 
