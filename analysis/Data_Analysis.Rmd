@@ -15,7 +15,7 @@ always_allow_html: yes # required for PDF
 
 ```{r,echo=FALSE}
 
-pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb")
+pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb", "rsconnect")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -241,6 +241,7 @@ players_2018 <- within(players_2018, mip <- ifelse(players_2018$player == "Victo
 
 year_names = c()
 
+
 for (i in years){
   
     year_names = c(year_names, paste0("players_", i))
@@ -405,6 +406,7 @@ players_2019[with(players_2019, order(-mvp_odds)),]
 ```
 
 ```{r}
+rookies_2019 = anti_join(players_2019, players_all, by = 'player')
 
 rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$age + 0.0012159*rookies_2019$mp + 0.7284919*rookies_2019$orb + 0.4127871*rookies_2019$ast))))
 
