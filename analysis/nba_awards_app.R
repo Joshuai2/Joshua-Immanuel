@@ -1,7 +1,6 @@
 library(shiny)
 library(fmsb)
 library(gridExtra)
-data("mtcars")
 
 ui = fluidPage(
   titlePanel("NBA Awards Predictor"), # Title
@@ -11,18 +10,22 @@ ui = fluidPage(
       h3("Award Selection"),
       
       # Dropdowns
-      selectInput("aw", "What award do you want to predict?", 
+      selectInput(inputId ="award", "What award do you want to predict?", 
                   choices = c("MVP", "Rookie of the Year", "Defensive Player of the Year",
                               "Sixth Man", "Most Improved Player")),
       
       numericInput(inputId = "year", label = ("Year (e.g. 1980)"), 
                    value = 2019, min = 1989, max = 2019),
       
-      submitButton("Load Preview Awards")
+      actionButton("button", "Load Preview Awards")
     ),
     
     mainPanel(
-      column(6,plotOutput(outputId="plotgraph", width="700px",height="500px"))
+      h3("Top Five Predictions"),
+      verbatimTextOutput("predictions")
+      
+      #h3("Radar Plot"),
+      #plotOutout("radar")
     )
   )
 )
@@ -30,57 +33,62 @@ ui = fluidPage(
 # Define server logic ----
 server = function(input, output, session) {
   
-  set.seed(123)
-  pt1 <- reactive({
-    radarchart( mtcars  , axistype=1 , 
-                
-                #custom polygon
-                pcol=rgb(0.2,0.5,0.5,0.9) , pfcol=rgb(0.2,0.5,0.5,0.5) , plwd=4 , 
-                
-                #custom the grid
-                cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,20,5), cglwd=0.8,
-                
-                #custom labels
-                vlcex=0.8 
+  active_awards = eventReactive(input$button, {
+    switch(active_awards(), 
+           "MVP" = active_dataset()$mvp_odds,
+           "Rookie of the Year" = active_dataset()$roy_odds,
+           "Defensive Player of the Year" = active_dataset()$dpoy_odds,
+           "Sixth Man" = active_dataset()$smoy_odds
+           #"Most Improved Player" = active_dataset()[with(mip_2019, order(-mip_odds)),] different dataset
     )
   })
-  pt2 <- reactive({
-    radarchart(mtcars, axistype=1 , 
-                
-                #custom polygon
-                pcol=rgb(0.2,0.5,0.5,0.9) , pfcol=rgb(0.2,0.5,0.5,0.5) , plwd=4 , 
-                
-                #custom the grid
-                cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,20,5), cglwd=0.8,
-                
-                #custom labels
-                vlcex=0.8 
+  
+  #matching dataset year
+  active_dataset = eventReactive(input$button, {
+    switch(paste0("players_", input$year),
+           "players_1989" = players_1989,
+           "players_1990" = players_1990,
+           "players_1991" = players_1991,
+           "players_1992" = players_1992,
+           "players_1993" = players_1993,
+           "players_1994" = players_1994,
+           "players_1995" = players_1995,
+           "players_1996" = players_1996,
+           "players_1997" = players_1997,
+           "players_1998" = players_1998,
+           "players_1999" = players_1999,
+           "players_2000" = players_2000,
+           "players_2001" = players_2001,
+           "players_2002" = players_2002,
+           "players_2003" = players_2003,
+           "players_2004" = players_2004,
+           "players_2005" = players_2005,
+           "players_2006" = players_2006,
+           "players_2007" = players_2007,
+           "players_2008" = players_2008,
+           "players_2009" = players_2009,
+           "players_2010" = players_2010,
+           "players_2011" = players_2011,
+           "players_2012" = players_2012,
+           "players_2013" = players_2013,
+           "players_2014" = players_2014,
+           "players_2015" = players_2015,
+           "players_2016" = players_2016,
+           "players_2017" = players_2017,
+           "players_2018" = players_2018,
+           "players_2019" = players_2019
+           
     )
   })
-  pt3 <- reactive({
-    radarchart( mtcars  , axistype=1 , 
-                
-                #custom polygon
-                pcol=rgb(0.2,0.5,0.5,0.9) , pfcol=rgb(0.2,0.5,0.5,0.5) , plwd=4 , 
-                
-                #custom the grid
-                cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,20,5), cglwd=0.8,
-                
-                #custom labels
-                vlcex=0.8 
-    )
+  #fit_mvp = eventReactive(input$perform, ) if we can generalize the fit, then develop this
+  
+  #create column for players and percentages
+  cleaning_data = eventReactive(input$button, {
+    cbind(active_dataset$player, active_awards())
   })
-  output$plotgraph = renderPlot({
-    ptlist <- list(pt1(),pt2(),pt3())
-    wtlist <- c(input$wt1,input$wt2,input$wt3)
-    # remove the null plots from ptlist and wtlist
-    to_delete <- !sapply(ptlist,is.null)
-    ptlist <- ptlist[to_delete] 
-    wtlist <- wtlist[to_delete]
-    if (length(ptlist)==0) return(NULL)
-    
-    grid.arrange(grobs=ptlist,widths=wtlist,ncol=length(ptlist))
-  })
+  output$predictions = renderPrint(
+    cleaning_data()
+  )
   
   
 }
