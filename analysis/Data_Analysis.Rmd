@@ -454,7 +454,7 @@ mip_2019$x3p = mip_2019_new$x3p - mip_2019_old$x3p
 mip_2019$x3pa = mip_2019_new$x3pa - mip_2019_old$x3pa
 
 
-mip_2019$mip = as.numeric(1/(1+exp(-1*(-5.4244556 + 0.8269561*mip_2019$tov + -0.2037588*mip_2019$age + 3.8753971*mip_2019$x3p + -1.3835910*mip_2019$x3pa)))^5)
+mip_2019$mip = as.numeric(1/(1+exp(-1*(-5.4244556 + 0.8269561*mip_2019$tov + -0.2037588*mip_2019$age + 3.8753971*mip_2019$x3p + -1.3835910*mip_2019$x3pa)))^9)
 
 mip_2019$mip_odds = mip_2019$mip/sum(mip_2019$mip)
 
@@ -463,7 +463,7 @@ mip_2019$mip_odds = mip_2019$mip/sum(mip_2019$mip)
 mip_2019[with(mip_2019, order(-mip_odds)),]
 
 
-radarchart(mip_2019[with(mip_2019, order(-mip_odds)),])
+#radarchart(mip_2019[with(mip_2019, order(-mip_odds)),])
 
 ```
 
