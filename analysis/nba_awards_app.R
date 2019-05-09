@@ -1,8 +1,11 @@
 library(shiny)
 library(fmsb)
 library(gridExtra)
+library(shinyWidgets) #shiny background color
 
 ui = fluidPage(
+  tags$h2("Change shiny app background"),
+  setBackgroundColor("snow"),
   titlePanel("NBA Awards Predictor"), # Title
   
   sidebarLayout(
@@ -21,11 +24,43 @@ ui = fluidPage(
     ),
     
     mainPanel(
-      h3("2019 Top Five Predictions"),
-      verbatimTextOutput("predictions")
+      tabsetPanel(
+        tabPanel(
+          "Summary",
+      "2019 Top Five Predictions",
+      verbatimTextOutput("predictions"),
       
-      #h3("Radar Plot"),
-      #plotOutout("radar")
+        
+      "Award Winner",
+      verbatimTextOutput("winner"),
+      style = "border-color: white"
+      ),
+      tabPanel(
+      "Radar Plot Predicted Player 1",
+      plotlyOutput("radar1"),
+      style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 2",
+        plotlyOutput("radar2"),
+        style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 3",
+        plotlyOutput("radar3"),
+        style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 4",
+        plotlyOutput("radar4"),
+        style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 5",
+        plotlyOutput("radar5"),
+        style = "border-color: white"
+      )
+      )
     )
   )
 )
@@ -33,7 +68,7 @@ ui = fluidPage(
 # Define server logic ----
 server = function(input, output, session) {
   
-  active_awards2019 = eventReactive(input$button, input$award)
+  awards_classification = eventReactive(input$button, input$award)
 
   active_year = eventReactive(input$button, input$year)
   
@@ -85,6 +120,23 @@ server = function(input, output, session) {
            "Sixth Man of the Year" = active_dataset()$smoy
     )
   })
+  
+  active_predictions = eventReactive(input$button, {
+    switch(input$award,
+           "MVP" = active_dataset()$mvp_odds, 
+           "Rookie of the Year" = active_dataset()$roy_odds, 
+           "Defensive Player of the Year"= active_dataset()$dpoy_odds,
+           "Sixth Man of the Year" = active_dataset()$smoy_odds
+    )
+  })
+  
+  df_predictions = eventReactive(input$button,{
+    df_predictions = data.frame(Player = active_dataset()$player, 
+                             Position = active_dataset()$pos, 
+                             Age = active_dataset()$age,
+                             Chance = active_predictions()) 
+    return(df_predictions)
+  })
 
   cleaning_df = eventReactive(input$button,{
     cleaning_df = data.frame(Player = active_dataset()$player, 
@@ -95,34 +147,23 @@ server = function(input, output, session) {
   })
 
   
-  graph_prep = eventReactive(input$button,{
-    graph_prep = active_dataset()[,c("player","per", "tspercent", "pts", "ast", "trb")]
+  df_graph = eventReactive(input$button, {
+    df_graph = data.frame(player = active_dataset()$player,
+                          per = active_dataset()$per, 
+                          tspercent= active_dataset()$tspercent, 
+                          pts = active_dataset()$pts, 
+                          ast = active_dataset()$ast, 
+                          trb = active_dataset()$trb,
+                          Chance = active_predictions())
+    df_graph = df_graph[with(df_graph, order(-Chance)),]
+    df_graph = df_graph[,-7]
+    return(df_graph)
   })
- 
-  #create column for players and percentages
-  output$predictions = renderPrint(
-  if(active_year() == 2019){
-   if(active_awards2019() == "MVP"){
-     head(df_mvp)
-   }else if(active_awards2019() == "Rookie of the Year"){
-     head(df_roy)
-   }else if(active_awards2019() == "Defensive Player of the Year"){
-     head(df_dpoy)
-   }else if(active_awards2019() == "Sixth Man of the Year"){
-     head(df_smoy)
-   }
-  }else{
-        cleaning_df()[cleaning_df()$Chance == 1,]
-    }
-  )
   
-  output$radar = renderPlot(
-    if(active_year() == 2019){
-    normalize_data <- function(x) {
-      return((100)*(x - rep(min(x), length(x))) / (rep(max(x), length(x)) - rep(min(x), length(x))))
-    }
-
-    mvp_1990_graph_display = [,c("player","per", "tspercent", "pts", "ast", "trb")]
+  
+ 
+  active_radar = eventReactive(input$button, {
+    mvp_1990_graph_display = df_graph()
     for (i in colnames(mvp_1990_graph_display)) {
       if (i == "player") {
         
@@ -130,15 +171,26 @@ server = function(input, output, session) {
       }
       mvp_1990_graph_display[,i] = normalize_data(mvp_1990_graph_display[,i])
     }
-    
-    p <- plot_ly(
+    return(mvp_1990_graph_display)
+  })
+  #create column for players and percentages
+  output$predictions = renderPrint(
+      head(df_predictions()[with(df_predictions(), order(-Chance)),])
+  )
+  
+  output$winner = renderPrint(
+    cleaning_df()[cleaning_df()$Chance == 1,]
+  )
+  
+  output$radar1 = renderPlotly(
+    plot_ly(
       type = 'scatterpolar',
       fill = 'toself'
     ) %>%
       add_trace(
-        r = as.numeric(mvp_1990_graph_display[1, c("per", "tspercent", "pts", "ast", "trb")]),
+        r = as.numeric(active_radar()[1, c("per", "tspercent", "pts", "ast", "trb")]),
         theta = c('per','tspercent','pts', 'ast', "trb"),
-        name = mvp_1990_graph_display[1, "player"]
+        name = active_radar()[1, "player"]
       ) %>%
       layout(
         polar = list(
@@ -148,12 +200,87 @@ server = function(input, output, session) {
           )
         )
       )
-    
-    return(p)
-    }else 
   )
   
+  output$radar2 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[2, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[2, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
   
+  output$radar3 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[3, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[3, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
+  
+  output$radar4 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[4, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[4, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
+  
+  output$radar5 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[5, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[5, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
 
 }
 # Launch the App
