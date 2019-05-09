@@ -284,23 +284,6 @@ for (i in years){
 
 ```{r}
 
-for (i in year_names){
-  
-    assign(i, subset(get(i), select = -c(x, x_2) ))
-    
-}
-
-for (i in year_names){
-  
-    assign(i, subset(get(i), select = -c(tm, link) ))
-    
-}
-
-```
-
-
-```{r}
-
 #per + tspercent + x3par + ftr + orbpercent + drbpercent + trbpercent + astpercent + stlpercent + blkpercent + tovpercent + usgpercent + ows + dws + obpm + dbpm + vorp + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
 ```
 
@@ -314,6 +297,8 @@ for (i in year_names){
   players_all <- rbind(players_all, get(i))  
   
 }
+
+
 
 ```
 
@@ -352,7 +337,7 @@ summary(swout_mvp_advanced) #better
 #roy
 
 object <- glm(roy ~ 1, family=binomial(link="logit"), data=players_all)
-#swout_roy_normal <- step(object, scope = indep.vars_normal, direction = "both")
+swout_roy_normal <- step(object, scope = indep.vars_normal, direction = "both")
 summary(swout_roy_normal) #better
 
 #vcov(swout_roy_normal)
@@ -373,7 +358,7 @@ object <- glm(dpoy ~ 1, family=binomial(link="logit"), data=players_all)
 
 #vcov(swout_dpoy_normal)
 
-#swout_dpoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+swout_dpoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 summary(swout_dpoy_advanced) #better
 
 #vcov(swout_dpoy_advanced)
@@ -390,7 +375,7 @@ object <- glm(smoy ~ 1, family=binomial(link="logit"), data=players_all[which(pl
 
 #vcov(swout_smoy_normal)
 
-#swout_smoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+swout_smoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 summary(swout_smoy_advanced) #better
 
 #vcov(swout_smoy_advanced)
@@ -432,7 +417,7 @@ players_2019$C = ifelse(players_2019$pos == "C", 1, 0)
 
 players_2019$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2019$per + 0.25109*players_2019$tovpercent + 0.56602*players_2019$dws))))
 
-players_2019$mvp_odds = players_2019$mvp/sum(players_2019$mvp)
+players_2019$mvp_odds = players_2019$mvp/sum(players_2019$mvp)*100
 
 players_2019[with(players_2019, order(-mvp_odds)),]
 
@@ -440,14 +425,14 @@ players_2019[with(players_2019, order(-mvp_odds)),]
 
 ```{r}
 
-rookies_2019 = anti_join(players_2019,players_all,  by='player')
+rookies_2019 = anti_join(players_2019, players_all,  by='player')
 
 
 rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$age + 0.0012159*rookies_2019$mp + 0.7284919*rookies_2019$orb + 0.4127871*rookies_2019$ast))))
 
-rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)
+rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)*100
 
-players_2019 <- merge(players_2019, rookies_2019, all = TRUE)
+players_2019 <- join(players_2019, rookies_2019, type = "left")
 players_2019[is.na(players_2019)] <- 0
 
 
@@ -475,6 +460,5 @@ players_2019$smoy_odds = players_2019$smoy/sum(players_2019$smoy)
 players_2019[with(players_2019, order(-smoy_odds)),]
   
 ```
-
 
 
