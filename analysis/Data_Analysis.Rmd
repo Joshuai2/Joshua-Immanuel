@@ -43,7 +43,7 @@ for (i in years){
   
   #Removing players who haven't played a minimum of 70% of the games in the season
   assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > 0.7*max(get(paste0("players_", i))$g),])
-  
+
 }
 
 ```
@@ -74,7 +74,6 @@ for (i in year_names){
     assign(i, subset(get(i), select = -c(tm, link) ))
     
 }
-
 
 ```
 
@@ -459,9 +458,24 @@ players_2019$smoy = ifelse(players_2019$gs < 41, as.numeric(1/(1+exp(-1*(-4.334e
 players_2019$smoy_odds = players_2019$smoy/sum(players_2019$smoy)
 
 players_2019[with(players_2019, order(-smoy_odds)),]
+```
 
-df <- data.frame(player = players_2019$player, position = players_2019$pos, age = players_2019$age)  
-df
+```{r}
+df_mvp <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$mvp_odds)  
+df_mvp =df_mvp[with(df$mvp, order(-Chance)),]
+df_mvp
+
+df_roy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$roy_odds)  
+df_roy =df_roy[with(df_roy, order(-Chance)),]
+df_roy
+
+df_dpoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$dpoy_odds)  
+df_dpoy =df_dpoy[with(df_dpoy, order(-Chance)),]
+df_dpoy
+
+df_smoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$smoy_odds)  
+df_smoy =df_smoy[with(df_smoy, order(-Chance)),]
+df_smoy
 ```
 
 

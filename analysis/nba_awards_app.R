@@ -10,7 +10,7 @@ ui = fluidPage(
       # Dropdowns
       selectInput(inputId ="award", "What award do you want to predict?", 
                   choices = c("MVP", "Rookie of the Year", "Defensive Player of the Year",
-                              "Sixth Man")),
+                              "Sixth Man of the Year")),
       
       numericInput(inputId = "year", label = ("Year (e.g. 1980)"), 
                    value = 2019, min = 1989, max = 2019),
@@ -31,12 +31,7 @@ ui = fluidPage(
 # Define server logic ----
 server = function(input, output, session) {
 
-  active_awards = eventReactive(input$button, {
-    switch(input$award, 
-           "MVP" = active_dataset(), "Rookie of the Year", "Defensive Player of the Year",
-           "Sixth Man"
-           )
-  })
+  active_awards = eventReactive(input$button, input$award)
   active_year = eventReactive(input$button, input$year)
   
   #matching dataset year
@@ -77,18 +72,24 @@ server = function(input, output, session) {
            )
   })
   
- # active_cleandat = eventReactive(input$button, {
-  #  df = data.frame(player = active_dataset()$
-  #})
+ 
   #create column for players and percentages
   output$predictions = renderPrint(
-    if(active_year() == 2019){
-   head(active_dataset())
+  if(active_year() == 2019){
+   if(active_awards() == "MVP"){
+     head(df_mvp)
+   }else if(active_awards() == "Rookie of the Year"){
+     head(df_roy)
+   }else if(active_awards() == "Defensive Player of the Year"){
+     head(df_dpoy)
+   }else if(active_awards() == "Sixth Man of the Year"){
+     head(df_smoy)
+   }
     }
   )
   
   
-}
 
+}
 # Launch the App
 shinyApp(ui, server)
