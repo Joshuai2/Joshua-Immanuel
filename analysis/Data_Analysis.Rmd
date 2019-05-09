@@ -14,7 +14,7 @@ always_allow_html: yes # required for PDF
 
 
 ```{r,echo=FALSE}
-pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb", "rsconnect")
+pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb", "rsconnect", "plotly", "data.table")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -36,6 +36,11 @@ for (i in years){
   
   #Removing players who haven't played a minimum of 70% of the games in the season
   assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > 0.7*max(get(paste0("players_", i))$g),])
+}
+
+for (i in years) {
+  df_name = paste0("players_",i)
+  set(get(df_name), j = "player", value = str_remove_all(get(df_name)$player, "\\*"))
 }
 ```
 
@@ -249,15 +254,15 @@ object <- glm(mvp ~ 1, family=binomial(link="logit"), data=players_all)
 #swout_mvp_normal <- step(object, scope = indep.vars_normal, direction = "both")
 #summary(swout_mvp_normal)
 #vcov(swout_mvp_normal)
-#swout_mvp_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+swout_mvp_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 summary(swout_mvp_advanced) #better
-#vcov(swout_mvp_advanced)
+vcov(swout_mvp_advanced)
 ```
 
 ```{r}
 #roy
 object <- glm(roy ~ 1, family=binomial(link="logit"), data=players_all)
-#swout_roy_normal <- step(object, scope = indep.vars_normal, direction = "both")
+swout_roy_normal <- step(object, scope = indep.vars_normal, direction = "both")
 summary(swout_roy_normal) #better
 #vcov(swout_roy_normal)
 #swout_roy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
@@ -271,7 +276,7 @@ object <- glm(dpoy ~ 1, family=binomial(link="logit"), data=players_all)
 #swout_dpoy_normal <- step(object, scope = indep.vars_normal, direction = "both")
 #summary(swout_dpoy_normal)
 #vcov(swout_dpoy_normal)
-#swout_dpoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+swout_dpoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 summary(swout_dpoy_advanced) #better
 #vcov(swout_dpoy_advanced)
 ```
@@ -282,7 +287,7 @@ object <- glm(smoy ~ 1, family=binomial(link="logit"), data=players_all[which(pl
 #swout_smoy_normal <- step(object, scope = indep.vars_normal, direction = "both")
 #summary(swout_smoy_normal)
 #vcov(swout_smoy_normal)
-#swout_smoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+swout_smoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 summary(swout_smoy_advanced) #better
 #vcov(swout_smoy_advanced)
 ```
@@ -291,7 +296,7 @@ summary(swout_smoy_advanced) #better
 ```{r}
 # mip
 object <- glm(mip ~ 1, family=binomial(link="logit"), data=players_all)
-#swout_mip_normal <- step(object, scope = indep.vars_normal, direction = "both")
+swout_mip_normal <- step(object, scope = indep.vars_normal, direction = "both")
 summary(swout_mip_normal) #better
 #vcov(swout_mip_normal)
 #swout_mip_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
@@ -311,7 +316,7 @@ players_2019$C = ifelse(players_2019$pos == "C", 1, 0)
 ```{r}
 players_2019$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2019$per + 0.25109*players_2019$tovpercent + 0.56602*players_2019$dws))))
 players_2019$mvp_odds = players_2019$mvp/sum(players_2019$mvp)
-players_2019[with(players_2019, order(-mvp_odds)),]
+mvp_2019 = players_2019[with(players_2019, order(-mvp_odds)),]
 ```
 
 ```{r}
@@ -320,20 +325,20 @@ rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$
 rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)
 players_2019 <- merge(players_2019, rookies_2019, all = TRUE)
 players_2019[is.na(players_2019)] <- 0
-players_2019[with(players_2019, order(-roy_odds)),]
+roy_2019 = players_2019[with(players_2019, order(-roy_odds)),]
 ```
 
 
 ```{r}
 players_2019$dpoy = as.numeric(1/(1+exp(-1*(-7.6440321 + 1.6298305*players_2019$dws + -0.3212441*players_2019$usgpercent + 0.3284959*players_2019$per + -0.0018602*players_2019$mp))))
 players_2019$dpoy_odds = players_2019$dpoy/sum(players_2019$dpoy)
-players_2019[with(players_2019, order(-dpoy_odds)),]
+dpoy_2019 = players_2019[with(players_2019, order(-dpoy_odds)),]
 ```
 
 ```{r}
 players_2019$smoy = ifelse(players_2019$gs < 41, as.numeric(1/(1+exp(-1*(-4.334e+01 + 4.575e-01*players_2019$usgpercent + 1.206e+00*players_2019$dws + -1.090e+00*players_2019$blkpercent + 4.005e+01*players_2019$tspercent + 2.762e-03*players_2019$mp)))), 0)
 players_2019$smoy_odds = players_2019$smoy/sum(players_2019$smoy)
-players_2019[with(players_2019, order(-smoy_odds)),]
+smoy_2019 = players_2019[with(players_2019, order(-smoy_odds)),]
   
 ```
 
@@ -348,6 +353,59 @@ mip_2019$x3p = mip_2019_new$x3p - mip_2019_old$x3p
 mip_2019$x3pa = mip_2019_new$x3pa - mip_2019_old$x3pa
 mip_2019$mip = as.numeric(1/(1+exp(-1*(-5.4244556 + 0.8269561*mip_2019$tov + -0.2037588*mip_2019$age + 3.8753971*mip_2019$x3p + -1.3835910*mip_2019$x3pa)))^9)
 mip_2019$mip_odds = mip_2019$mip/sum(mip_2019$mip)
-mip_2019[with(mip_2019, order(-mip_odds)),]
-#radarchart(mip_2019[with(mip_2019, order(-mip_odds)),])
+test = mip_2019[with(mip_2019, order(-mip_odds)),]
+displayed = within(test, rm(player))
+radarchart(displayed[1,], maxmin = FALSE)
+colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
 ```
+
+
+```{r}
+
+
+players_1990$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1990$per + 0.25109*players_1990$tovpercent + 0.56602*players_1990$dws))))
+players_1990$mvp_odds = players_1990$mvp/sum(players_1990$mvp)
+mvp_1990 = players_1990[with(players_1990, order(-mvp_odds)),]
+
+```
+
+```{r}
+
+
+normalize_data <- function(x, year) {
+  return((100)*(x - rep(min(x), length(x))) / (rep(max(x), length(x)) - rep(min(x), length(x))))
+}
+
+
+mvp_1990_graph_display = mvp_1990[,c("player","per", "tspercent", "pts", "ast", "trb")]
+for (i in colnames(mvp_1990_graph_display)) {
+  if (i == "player") {
+    
+    next;
+  }
+  mvp_1990_graph_display[,i] = normalize_data(mvp_1990_graph_display[,i])
+}
+
+
+p <- plot_ly(
+    type = 'scatterpolar',
+    fill = 'toself'
+  ) %>%
+  add_trace(
+    r = as.numeric(mvp_1990_graph_display[1, c("per", "tspercent", "pts", "ast", "trb")]),
+    theta = c('per','tspercent','pts', 'ast', "trb"),
+    name = mvp_1990_graph_display[1, "player"]
+  ) %>%
+  layout(
+    polar = list(
+      radialaxis = list(
+        visible = T,
+        range = c(0, 100)
+      )
+    )
+  )
+
+  
+  p
+```
+
