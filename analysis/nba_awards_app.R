@@ -73,13 +73,10 @@ server = function(input, output, session) {
            
     )
   })
-<<<<<<< HEAD
   #fit_mvp = eventReactive(input$perform, ) if we can generalize the fit, then develop this
   
-=======
-  
+
  
->>>>>>> 00cbe2abb8122493c7dda4c75e6341b3534bb2c4
   #create column for players and percentages
   output$predictions = renderPrint(
   if(active_year() == 2019){
