@@ -15,8 +15,6 @@ always_allow_html: yes # required for PDF
 
 ```{r,echo=FALSE}
 pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb", "rsconnect", "plotly", "data.table")
-
-pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "rsconnect")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -40,7 +38,7 @@ for (i in years){
   assign(paste0("players_", i),  get(paste0("players_", i))[!duplicated(get(paste0("players_", i))$rk), ])
   
   #Removing players who haven't played a minimum of 70% of the games in the season
-  assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > 0.7*max(get(paste0("players_", i))$g),])
+  assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > (55/82)*max(get(paste0("players_", i))$g),])
 }
 
 for (i in years) {
@@ -226,6 +224,7 @@ players_2017 <- within(players_2017, roy <- ifelse(players_2017$player == "Malco
 players_2017 <- within(players_2017, dpoy <- ifelse(players_2017$player == "Draymond Green", 1, 0)) 
 players_2017 <- within(players_2017, smoy <- ifelse(players_2017$player == "Eric Gordon", 1, 0)) 
 players_2017 <- within(players_2017, mip <- ifelse(players_2017$player == "Giannis Antetokounmpo", 1, 0))
+
 players_2018 <- within(players_2018, mvp <- ifelse(players_2018$player == "James Harden", 1, 0)) 
 players_2018 <- within(players_2018, roy <- ifelse(players_2018$player == "Ben Simmons", 1, 0)) 
 players_2018 <- within(players_2018, dpoy <- ifelse(players_2018$player == "Rudy Gobert", 1, 0)) 

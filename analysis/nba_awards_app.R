@@ -32,8 +32,9 @@ ui = fluidPage(
 
 # Define server logic ----
 server = function(input, output, session) {
+  
+  active_awards2019 = eventReactive(input$button, input$award)
 
-  active_awards = eventReactive(input$button, input$award)
   active_year = eventReactive(input$button, input$year)
   
   #matching dataset year
@@ -73,25 +74,38 @@ server = function(input, output, session) {
            
     )
   })
-<<<<<<< HEAD
-  #fit_mvp = eventReactive(input$perform, ) if we can generalize the fit, then develop this
   
-=======
-  
+  active_awards = eventReactive(input$button, {
+    switch(input$award,
+           "MVP" = active_dataset()$mvp, 
+           "Rookie of the Year" = active_dataset()$roy, 
+           "Defensive Player of the Year"= active_dataset()$dpoy,
+           "Sixth Man of the Year" = active_dataset()$smoy
+    )
+  })
+
+  cleaning_df = eventReactive(input$button,{
+    cleaning_df = data.frame(Player = active_dataset()$player, 
+                    Position = active_dataset()$pos, 
+                    Age = active_dataset()$age,
+                    Chance = active_awards()) 
+    return(cleaning_df)
+  })
  
->>>>>>> 00cbe2abb8122493c7dda4c75e6341b3534bb2c4
   #create column for players and percentages
   output$predictions = renderPrint(
   if(active_year() == 2019){
-   if(active_awards() == "MVP"){
+   if(active_awards2019() == "MVP"){
      head(df_mvp)
-   }else if(active_awards() == "Rookie of the Year"){
+   }else if(active_awards2019() == "Rookie of the Year"){
      head(df_roy)
-   }else if(active_awards() == "Defensive Player of the Year"){
+   }else if(active_awards2019() == "Defensive Player of the Year"){
      head(df_dpoy)
-   }else if(active_awards() == "Sixth Man of the Year"){
+   }else if(active_awards2019() == "Sixth Man of the Year"){
      head(df_smoy)
    }
+  }else{
+        cleaning_df()[cleaning_df()$Chance == 1,]
     }
   )
   
