@@ -93,15 +93,12 @@ server = function(input, output, session) {
                     Chance = active_awards()) 
     return(cleaning_df)
   })
-<<<<<<< HEAD
 
-=======
   
   graph_prep = eventReactive(input$button,{
     graph_prep = active_dataset()[,c("player","per", "tspercent", "pts", "ast", "trb")]
   })
  
->>>>>>> 631351921f05fe07862780d90d85dc2d70d5c6ea
   #create column for players and percentages
   output$predictions = renderPrint(
   if(active_year() == 2019){

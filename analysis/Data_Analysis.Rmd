@@ -504,3 +504,21 @@ p <- plot_ly(
   
   p
 ```
+
+
+
+```{r}
+
+for (i in years) {
+  df_name = paste0("players_",i)
+  
+  test = as.data.table(get(df_name), keep.rownames = TRUE)
+  set(test, j = "mvp", value = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*test$per + 0.25109*test$tovpercent +   0.56602*test$dws)))))
+  set(test, j = "dpoy", value = as.numeric(1/(1+exp(-1*(-7.6440321 + 1.6298305*test$dws + -0.3212441*test$usgpercent + 0.3284959*test$per + -0.0018602*test$mp)))))
+  set(test, j = "dpoy_odds", value = test$dpoy/sum(test$dpoy))
+  set(test, j = "mvp_odds", value = test$mvp/sum(test$mvp))
+  assign(paste0("awards_", i), test[with(test, order(-test[,c("dpoy_odds", "mvp_odds")]))])
+}
+
+
+```
