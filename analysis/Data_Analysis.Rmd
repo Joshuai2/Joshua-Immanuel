@@ -43,7 +43,7 @@ for (i in years){
   
   #Removing players who haven't played a minimum of 70% of the games in the season
   assign(paste0("players_", i),  get(paste0("players_", i))[get(paste0("players_", i))$g > 0.7*max(get(paste0("players_", i))$g),])
-
+  
 }
 
 ```
@@ -74,6 +74,7 @@ for (i in year_names){
     assign(i, subset(get(i), select = -c(tm, link) ))
     
 }
+
 
 ```
 
