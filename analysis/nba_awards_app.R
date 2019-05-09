@@ -1,7 +1,7 @@
 library(shiny)
-library(fmsb)
+
 library(gridExtra)
-library(shinyWidgets) 
+library(shinyWidgets)
 #shiny background color
 
 ui = fluidPage(
@@ -28,7 +28,7 @@ ui = fluidPage(
       tabsetPanel(
         tabPanel(
           "Summary",
-      "2019 Top Five Predictions",
+      "Top Five Predictions",
       verbatimTextOutput("predictions"),
       
         
@@ -37,27 +37,27 @@ ui = fluidPage(
       style = "border-color: white"
       ),
       tabPanel(
-      "Radar Plot Predicted Player 1",
+      "Radar Plot of 1st Place",
       plotlyOutput("radar1"),
       style = "border-color: white"
       ),
       tabPanel(
-        "Radar Plot Predicted Player 2",
+        "Radar Plot of 2nd Place",
         plotlyOutput("radar2"),
         style = "border-color: white"
       ),
       tabPanel(
-        "Radar Plot Predicted Player 3",
+        "Radar Plot of 3rd Place",
         plotlyOutput("radar3"),
         style = "border-color: white"
       ),
       tabPanel(
-        "Radar Plot Predicted Player 4",
+        "Radar Plot of 4th Place",
         plotlyOutput("radar4"),
         style = "border-color: white"
       ),
       tabPanel(
-        "Radar Plot Predicted Player 5",
+        "Radar Plot of 5th Place",
         plotlyOutput("radar5"),
         style = "border-color: white"
       )
