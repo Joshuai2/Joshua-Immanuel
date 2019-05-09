@@ -432,8 +432,6 @@ colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
 ```
 
 
-players_2019[with(players_2019, order(-smoy_odds)),]
-```
 
 ```{r}
 df_mvp <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$mvp_odds)  
@@ -447,6 +445,10 @@ df_roy
 df_dpoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$dpoy_odds)  
 df_dpoy =df_dpoy[with(df_dpoy, order(-Chance)),]
 df_dpoy
+
+df_smoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$smoy_odds)  
+df_smoy =df_smoy[with(df_smoy, order(-Chance)),]
+df_smoy
 ```
 
 
@@ -466,9 +468,7 @@ normalize_data <- function(x, year) {
   return((100)*(x - rep(min(x), length(x))) / (rep(max(x), length(x)) - rep(min(x), length(x))))
 }
 
-df_smoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$smoy_odds)  
-df_smoy =df_smoy[with(df_smoy, order(-Chance)),]
-df_smoy
+
 ```
 
 
