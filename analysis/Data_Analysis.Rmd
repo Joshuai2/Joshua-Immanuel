@@ -15,6 +15,8 @@ always_allow_html: yes # required for PDF
 
 ```{r,echo=FALSE}
 pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb", "rsconnect", "plotly", "data.table")
+
+pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "rsconnect")
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -27,8 +29,11 @@ years = (1989:2019)
 for (i in years){
   
   assign(paste0("players_", i), cbind(NBAPerGameAdvStatistics(season = i), NBAPerGameStatistics(season = i)))
-  
-  #remove duplicate columns
+
+}
+
+for (i in years){
+#remove duplicate columns
   assign(paste0("players_", i), get(paste0("players_", i))[, !duplicated(colnames(get(paste0("players_", i))))])
   
   #removing the players that are duplicated
@@ -43,6 +48,36 @@ for (i in years) {
   set(get(df_name), j = "player", value = str_remove_all(get(df_name)$player, "\\*"))
 }
 ```
+
+```{r}
+
+year_names = c()
+
+for (i in years){
+  
+    year_names = c(year_names, paste0("players_", i))
+    
+}
+
+```
+
+
+```{r}
+
+for (i in year_names){
+  
+    assign(i, subset(get(i), select = -c(x, x_2) ))
+    
+}
+
+for (i in year_names){
+  
+    assign(i, subset(get(i), select = -c(tm, link) ))
+    
+}
+
+```
+
 
 ```{r}
 # NBA Award Winners
@@ -224,8 +259,10 @@ for (i in year_names){
 
 
 ```{r}
+
 #per + tspercent + x3par + ftr + orbpercent + drbpercent + trbpercent + astpercent + stlpercent + blkpercent + tovpercent + usgpercent + ows + dws + obpm + dbpm + vorp + g + mp +  gs + x3p + x3pa + x2p + x2pa + ft + fta + orb + drb + trb + ast + stl + blk + tov + pf + pts
 ```
+
 
 ```{r}
 players_all = players_1989[FALSE,]
@@ -234,6 +271,9 @@ for (i in year_names){
   players_all <- rbind(players_all, get(i))  
   
 }
+
+
+
 ```
 
 ```{r}
@@ -254,6 +294,7 @@ object <- glm(mvp ~ 1, family=binomial(link="logit"), data=players_all)
 #swout_mvp_normal <- step(object, scope = indep.vars_normal, direction = "both")
 #summary(swout_mvp_normal)
 #vcov(swout_mvp_normal)
+
 swout_mvp_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 summary(swout_mvp_advanced) #better
 vcov(swout_mvp_advanced)
@@ -276,6 +317,7 @@ object <- glm(dpoy ~ 1, family=binomial(link="logit"), data=players_all)
 #swout_dpoy_normal <- step(object, scope = indep.vars_normal, direction = "both")
 #summary(swout_dpoy_normal)
 #vcov(swout_dpoy_normal)
+
 swout_dpoy_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 summary(swout_dpoy_advanced) #better
 #vcov(swout_dpoy_advanced)
@@ -302,6 +344,20 @@ summary(swout_mip_normal) #better
 #swout_mip_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
 #summary(swout_mip_advanced)
 #vcov(swout_mip_advanced)
+# # mip
+# 
+# object <- glm(mip ~ 1, family=binomial(link="logit"), data=players_all)
+# #swout_mip_normal <- step(object, scope = indep.vars_normal, direction = "both")
+# #summary(swout_mip_normal)
+# 
+# #vcov(swout_mip_normal)
+# 
+# 
+# #swout_mip_advanced <- step(object, scope = indep.vars_advanced, direction = "both")
+# summary(swout_mip_advanced) #better
+# 
+# #vcov(swout_mip_advanced)
+
 ```
 
 ```{r}
@@ -324,6 +380,23 @@ rookies_2019 = anti_join(players_2019, players_all, by = 'player')
 rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$age + 0.0012159*rookies_2019$mp + 0.7284919*rookies_2019$orb + 0.4127871*rookies_2019$ast))))
 rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)
 players_2019 <- merge(players_2019, rookies_2019, all = TRUE)
+
+players_2019$mvp_odds = players_2019$mvp/sum(players_2019$mvp)*100
+
+players_2019[with(players_2019, order(-mvp_odds)),]
+
+```
+
+```{r}
+
+rookies_2019 = anti_join(players_2019, players_all,  by='player')
+
+
+rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$age + 0.0012159*rookies_2019$mp + 0.7284919*rookies_2019$orb + 0.4127871*rookies_2019$ast))))
+
+rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)*100
+
+players_2019 <- join(players_2019, rookies_2019, type = "left")
 players_2019[is.na(players_2019)] <- 0
 roy_2019 = players_2019[with(players_2019, order(-roy_odds)),]
 ```
@@ -360,6 +433,24 @@ colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
 ```
 
 
+players_2019[with(players_2019, order(-smoy_odds)),]
+```
+
+```{r}
+df_mvp <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$mvp_odds)  
+df_mvp =df_mvp[with(df$mvp, order(-Chance)),]
+df_mvp
+
+df_roy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$roy_odds)  
+df_roy =df_roy[with(df_roy, order(-Chance)),]
+df_roy
+
+df_dpoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$dpoy_odds)  
+df_dpoy =df_dpoy[with(df_dpoy, order(-Chance)),]
+df_dpoy
+```
+
+
 ```{r}
 
 
@@ -376,7 +467,14 @@ normalize_data <- function(x, year) {
   return((100)*(x - rep(min(x), length(x))) / (rep(max(x), length(x)) - rep(min(x), length(x))))
 }
 
+df_smoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$smoy_odds)  
+df_smoy =df_smoy[with(df_smoy, order(-Chance)),]
+df_smoy
+```
 
+
+
+```{r}
 mvp_1990_graph_display = mvp_1990[,c("player","per", "tspercent", "pts", "ast", "trb")]
 for (i in colnames(mvp_1990_graph_display)) {
   if (i == "player") {
@@ -385,7 +483,6 @@ for (i in colnames(mvp_1990_graph_display)) {
   }
   mvp_1990_graph_display[,i] = normalize_data(mvp_1990_graph_display[,i])
 }
-
 
 p <- plot_ly(
     type = 'scatterpolar',
@@ -408,4 +505,3 @@ p <- plot_ly(
   
   p
 ```
-
