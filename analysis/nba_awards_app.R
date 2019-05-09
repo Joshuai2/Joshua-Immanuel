@@ -29,13 +29,8 @@ ui = fluidPage(
         tabPanel(
           "Summary",
       "Top Five Predictions",
-      verbatimTextOutput("predictions"),
-      
-        
-      "Award Winner",
-      verbatimTextOutput("winner"),
-      style = "border-color: white"
-      ),
+      verbatimTextOutput("predictions")
+        ),
       tabPanel(
       "Radar Plot of 1st Place",
       plotlyOutput("radar1"),
