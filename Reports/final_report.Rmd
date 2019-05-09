@@ -83,100 +83,21 @@ A lot of the statistics in use with modern publications are based on the researc
 
 # Methods
 
-First we use the ballr package [@ballr] to pull the statistical data from Basketball Reference website [@bball_ref]. Then we clean and combine the data using the concepts of "tidy data" [@tidyr]. We introduce dummy variables with respect to position (C, SG, SF, PF, PG).  
-
-For the interactive interface, we have created a Shiny App. The user can choose both the year (between 1989 and 2019) and the award to be predicted. 
-
-In order to visualize the data, we give radar plots of different attributes important for each of the awards. Next to this is the probability that that person would win the award.
-
-
-To satisfy this section, provide detailed responses for the following:
-
-- What packages will you use in your implementation?
-  - Data transformation: tidyr, dplyr, ballr
-  - Data visualization: plotly
-  - Interactive Interface: shiny
-  - Regression Analysis: leaps, glmnet, caret
-  
-- What code will the group need to write for the project?
-  1. Code for importing the data
-  2. Code for cleaning the pre-collected data and randomizing it
-  3. Code to create the linear regression in obtaining the weights for each respective variables
-  4. Code to create the toggle bar for the user interface input
-  5. Code to create the interactive bar graph where it also displays the summary of the players
-  
-- Provide low-fidelity prototypes (e.g. _sketches_ on paper) in the **Appendix** of:
-    - Visualisations
-        - What kinds of graphs will you use?
-        
-        We will use a horizontal bar graph where the y-axis contains the player's names and the x-axis contains the predicted percentage scores. We will put a picture of the athlete on the right side of their respective bars. The user will be able to interact with the graph by toggling on the face of the athlete and a word cloud will appear. The word cloud will consist of the google trending discussions on the athlete.
-        - Label axes, provide a title, and mention any interactivity.
-    - Interface
-
-- What have you done or learned so far for the project? 
-
-We have learned that we need to gather the statistical player data and filter them so that the we have relevant data. We need to gather the variables and do regression to determine weights of each variables. We need to gather data on player discussion trends to project it in the graph. We also need to create a user interface where the we get the user input data and graph the predicted results as well as the player statistics.
-
-We are primarily wanting to ensure that your project has met the criterion
-of the data science pipeline. In essence, we want to see evidence that your
-project has:
-
-- Reading data into _R_ or accessing data via an API.
-- Data transformations (e.g. Tidying ([`tidyr`](http://tidyr.tidyverse.org/)), Summarizing ([`dplyr`](http://dplyr.tidyverse.org/)), et cetera.)
-- Data visualization (e.g. [`ggplot2`](http://ggplot2.tidyverse.org/),
-  [`plotly`](https://plot.ly/ggplot2/), [`gganimate`](https://github.com/dgrtwo/gganimate))
-- R functions either in external packages or included in a new _R_ package
-- Interactive Interface (e.g. [`shiny`](https://shiny.rstudio.com/))
-- Reproducibility
+First we use the ballr package [@ballr] to pull the statistical data from Basketball Reference website [@bball_ref]. Then we clean and combine the data using the concepts of "tidy data" [@tidyr]. We introduce dummy variables with respect to position (C, SG, SF, PF, PG). For the interactive interface, we have created a Shiny App. The user can choose both the year (between 1989 and 2019) and the award to be predicted. In order to visualize the data, we give radar plots of different attributes important for each of the awards. Next to this is the probability that that person would win the award. 
 
 # Results
 
-
+We have effectively created predictions for every year from 1989 using our model. The model boasts at least above a 70% success rate - the model is also exceptionally good at picking the top player for each award every year. Our top five predictions tend to wane off in accuracy after the first prediction. Seeing how NBA awards are coach/media votes, it's hard to numerically gauge whether those players were really in the order of most effective. Take for example, Steph Curry's unanimous MVP year of 2016: He only has around a 70% of winning, though you could say it was probably estimated to be impossible for him to lose that year.
 
 # Discussion
 
-# Conclusion
-
-Overall, the project was generally successful. We took historical data and 
-
-The **Feasibility** section is meant to act as a way to reflect upon the proposal.
-Generally speaking, there will be three weeks of heavy development time afforded
-to the group. Building a detailed ecosystem or heavily scripting in a different
-language will likely not lead your team to success. Hence, please provide
-a project management overview of *who* on your team will be doing *what* and *when*
-by answering:
-
-- Is this project able to be completed before the end of the semester?
-
-It should be - while the data set is large, outside of the resource requirement, it should not be overly difficult to implement this specific idea. We will need to familiarize ourself with the specific data used here - lots of unique compiled stats are used in basketball as opposed to the typical counting stats. 
-
-- What steps must occur to complete the project before the end of the semester?
-
-Accumulate the data in a timely manner - we must find what data we are going to use and apply our model to it. We plan to have 30 years worth of data so data cleaning/valdiation is an important and time consuming portion. We must also create specific derived variables that will more effectively illustrate the value of each player to their team for all the specific criteria. We must then model each of the awards - they will all have unique weights for each of the statistics.
-
-- What is the work plan to accomplish the necessary tasks before the end of the
-  semester?
-  - Specify who is doing what and when.
-  - Consider making a [Gantt chart](https://en.wikipedia.org/wiki/Gantt_chart)
-    to highlight each stage of the project.
-    
-    Ajay - obtain data (primarily from BBallRef) and create derived variables
-    Bhanu - build model and generate output (train model for each individual award)
-    Joshua and Eric - build visualization components of the Shiny app
-    Ajay and Bhanu - add sentiment analysis portion to visualizations (make a word cloud)
+It is not particularly difficult to predict the overall winner of most NBA awards. Typically, the winner is pretty clear, but even if the winner is not obvious, our model does a good job of predicting who the top candidates are with suprising accuracy. Our results suggest that our goal has been accomplished - with systematic data from every year, we can predict the winner with a surprisingly high level of accuracy.
 
 # Conclusion
 
-If you can accurately predict NBA awards, there is significant money to be made
-betting on winners of these awards. Additionally, by looking at this topic,
-NBA teams can get a better idea of what a winning player looks like, and can
-construct teams accordingly.
+Overall, the project was generally successful. We took historical data and found accurate results for older years and probably for this year. For the year where MVP has not been decided yet, our choice is Giannis Antetokounmpo who is most analysts pick for the MVP despite James Harden's incredible scoring season. # Conclusion If you can accurately predict NBA awards, there is significant money to be made betting on winners of these awards. 
 
-This project will involve looking at 30 years of individual NBA player statistics. 
-We will develop a number of new advanced analytics and statistics to determine 
-player efficient and value. Using these numbers, we will rank players and determine
-who should win prominent NBA awards. We will visualize these results using bar graphs 
-and sentiment analysis.
+Additionally, by looking at this topic, NBA teams can get a better idea of what a winning player looks like, and can construct teams accordingly. This project will involve looking at 30 years of individual NBA player statistics. We will develop a number of new advanced analytics and statistics to determine player efficient and value. Using these numbers, we will rank players and determine who should win prominent NBA awards. We will visualize these results using bar graphs and sentiment analysis. 
 
 \newpage
 
@@ -206,6 +127,7 @@ $$
 $$
 tspercent = \frac{pts}{2*(fga + (0.44*fta))}*100
 $$
+
 - x3par - 3 point attempt rate
 - ows - offensive win shares
 - dws - defensive win shares
@@ -245,86 +167,7 @@ $$
 - bpm - total box plus/minus
 - vorp - value over replacement player
 
-
-
-to contain all of your _planning_ information.
-
-- Provide the sketches of visualisations and the shiny application.
-- Provide an overview on the desired functions.
-    - What is a function's input? Output? How are functions related to each other.
-    - For example, `read_data("hospital_data.csv")` must be called before `tidy_hospital()`, et cetera.
-- Provide a sample of the data set you intend to use (~10 observations).
-
-```{r}
-example = read.csv("example.csv")
-print(example)
-```
-
-
-
-If you used previous code chunks within the document, this information can
-be dynamically retrieved and embedded.
-
-```{r, ref.label=knitr::all_labels(),echo=TRUE,eval=FALSE}
-```
-
-```{r hitters-data, eval=FALSE}
-kable(
-  head(mtcars, 20),
-  format = "latex",
-  caption = "This is an example of a table in the Appendix. Notice that it is way too big, and has way too much information. We use the $\\texttt{kableExtra}$ package to shrink it down, but even then, no one would actually read this table.",
-  booktabs = TRUE
-) %>%
-  kable_styling(latex_options = c("striped", "scale_down"))
-```
-
-```{r wage-data, eval=FALSE}
-kable(
-  head(mtcars, 20),
-  format = "latex",
-  caption = "This is another example of a ridiculous table. Notice that it is automatically numbered.",
-  booktabs = TRUE
-) %>%
-  kable_styling(latex_options = c("striped", "scale_down"))
-```
-
-
-## Formatting Notes
-
-
-### `R` Code and `rmarkdown`
-
-An important part of the report is communicating results in a well-formatted manner. This template document should help a lot with that task. Some thoughts on using `R` and `rmarkdown`:
-
-- Chunks are set to not echo by default in this document.
-- Consider naming your chunks. This will be necessary for referencing chunks 
-  that create tables or figures.
-- One chunk per table or figure!
-- Tables should be created using `knitr::kable()`.
-- Consider using `kableExtra()` for better presentation of tables. (Examples in this document.)
-- Caption all figures and tables. (Examples in this document.)
-- Use the `img/` sub-directory for any external images.
-- Use the `data/` sub-directory for any external data.
-
-### LaTeX
-
-While you will not directly work with LaTeX, you may wish to have some details
-on working with TeX can be found in 
-[this guide by UIUC Mathematics Professor A.J. Hildebrand ](https://faculty.math.illinois.edu/~hildebr/tex/latex-start.html).
-
-With `rmarkdown`, LaTeX can be used inline, like this, $a ^ 2 + b ^ 2 = c ^ 2$,
-or using display mode,
-
-$$
-\mathbb{E}_{X, Y} \left[ (Y - f(X)) ^ 2 \right] = \mathbb{E}_{X} \mathbb{E}_{Y \mid X} \left[ ( Y - f(X) ) ^ 2 \mid X = x \right]
-$$
-
-You **are** required to use BibTeX for references. With BibTeX, we could 
-reference the `rmarkdown` paper or the tidy data paper.
- Some details can be found in the 
-[`bookdown` book](https://bookdown.org/yihui/bookdown/citations.html). Also,
-hint, [Google Scholar](https://scholar.google.com/) makes obtaining BibTeX 
-reference extremely easy. For more details, see the next section...
+## Results ![Shiny Application](/cloud/project/Reports/shiny_app.png)
 
 <!-- Force a new page for references -->
 \newpage
