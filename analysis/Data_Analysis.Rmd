@@ -14,7 +14,11 @@ always_allow_html: yes # required for PDF
 
 
 ```{r,echo=FALSE}
+<<<<<<< HEAD
 pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb", "rsconnect", "plotly", "data.table")
+=======
+pkg_list = c("plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "rsconnect", "plotly", "data.table")
+>>>>>>> 7b9d8d1a1f91cdf39cf6817543a2532c6252c391
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
