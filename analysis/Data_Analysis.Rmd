@@ -360,6 +360,8 @@ summary(swout_mip_normal) #better
 
 ```
 
+Dummy variables to account for position
+
 ```{r}
 #applying the model
 players_2019$PG = ifelse(players_2019$pos == "PG", 1, 0)
@@ -369,39 +371,298 @@ players_2019$PF = ifelse(players_2019$pos == "PF", 1, 0)
 players_2019$C = ifelse(players_2019$pos == "C", 1, 0)
 ```
 
+MVP Predictions
+
 ```{r}
+
 players_2019$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2019$per + 0.25109*players_2019$tovpercent + 0.56602*players_2019$dws))))
 players_2019$mvp_odds = players_2019$mvp/sum(players_2019$mvp)*100
 mvp_2019 = players_2019[with(players_2019, order(-mvp_odds)),]
+
+
+players_2018$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2018$per + 0.25109*players_2018$tovpercent + 0.56602*players_2018$dws))))
+players_2018$mvp_odds = players_2018$mvp/sum(players_2018$mvp)*100
+mvp_2018 = players_2018[with(players_2018, order(-mvp_odds)),]
+
+
+players_2017$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2017$per + 0.25109*players_2017$tovpercent + 0.56602*players_2017$dws))))
+players_2017$mvp_odds = players_2017$mvp/sum(players_2017$mvp)*100
+mvp_2017 = players_2017[with(players_2017, order(-mvp_odds)),]
+
+
+players_2016$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2016$per + 0.25109*players_2016$tovpercent + 0.56602*players_2016$dws))))
+players_2016$mvp_odds = players_2016$mvp/sum(players_2016$mvp)*100
+mvp_2016 = players_2016[with(players_2016, order(-mvp_odds)),]
+
+
+players_2015$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2015$per + 0.25109*players_2015$tovpercent + 0.56602*players_2015$dws))))
+players_2015$mvp_odds = players_2015$mvp/sum(players_2015$mvp)*100
+mvp_2015 = players_2015[with(players_2015, order(-mvp_odds)),]
+
+
+players_2014$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2014$per + 0.25109*players_2014$tovpercent + 0.56602*players_2014$dws))))
+players_2014$mvp_odds = players_2014$mvp/sum(players_2014$mvp)*100
+mvp_2014 = players_2014[with(players_2014, order(-mvp_odds)),]
+
+
+players_2013$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2013$per + 0.25109*players_2013$tovpercent + 0.56602*players_2013$dws))))
+players_2013$mvp_odds = players_2013$mvp/sum(players_2013$mvp)*100
+mvp_2013 = players_2013[with(players_2013, order(-mvp_odds)),]
+
+
+players_2012$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2012$per + 0.25109*players_2012$tovpercent + 0.56602*players_2012$dws))))
+players_2012$mvp_odds = players_2012$mvp/sum(players_2012$mvp)*100
+mvp_2012 = players_2012[with(players_2012, order(-mvp_odds)),]
+
+
+players_2011$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2011$per + 0.25109*players_2011$tovpercent + 0.56602*players_2011$dws))))
+players_2011$mvp_odds = players_2011$mvp/sum(players_2011$mvp)*100
+mvp_2011 = players_2011[with(players_2011, order(-mvp_odds)),]
+
+
+players_2010$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2010$per + 0.25109*players_2010$tovpercent + 0.56602*players_2010$dws))))
+players_2010$mvp_odds = players_2010$mvp/sum(players_2010$mvp)*100
+mvp_2010 = players_2010[with(players_2010, order(-mvp_odds)),]
+
+
+players_2009$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2009$per + 0.25109*players_2009$tovpercent + 0.56602*players_2009$dws))))
+players_2009$mvp_odds = players_2009$mvp/sum(players_2009$mvp)*100
+mvp_2009 = players_2009[with(players_2009, order(-mvp_odds)),]
+
+
+players_2008$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2008$per + 0.25109*players_2008$tovpercent + 0.56602*players_2008$dws))))
+players_2008$mvp_odds = players_2008$mvp/sum(players_2008$mvp)*100
+mvp_2008 = players_2008[with(players_2008, order(-mvp_odds)),]
+
+
+players_2007$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2007$per + 0.25109*players_2007$tovpercent + 0.56602*players_2007$dws))))
+players_2007$mvp_odds = players_2007$mvp/sum(players_2007$mvp)*100
+mvp_2007 = players_2007[with(players_2007, order(-mvp_odds)),]
+
+
+players_2006$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2006$per + 0.25109*players_2006$tovpercent + 0.56602*players_2006$dws))))
+players_2006$mvp_odds = players_2006$mvp/sum(players_2006$mvp)*100
+mvp_2006 = players_2006[with(players_2006, order(-mvp_odds)),]
+
+
+players_2005$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2005$per + 0.25109*players_2005$tovpercent + 0.56602*players_2005$dws))))
+players_2005$mvp_odds = players_2005$mvp/sum(players_2005$mvp)*100
+mvp_2005 = players_2005[with(players_2005, order(-mvp_odds)),]
+
+
+players_2004$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2004$per + 0.25109*players_2004$tovpercent + 0.56602*players_2004$dws))))
+players_2004$mvp_odds = players_2004$mvp/sum(players_2004$mvp)*100
+mvp_2004 = players_2004[with(players_2004, order(-mvp_odds)),]
+
+
+players_2003$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2003$per + 0.25109*players_2003$tovpercent + 0.56602*players_2003$dws))))
+players_2003$mvp_odds = players_2003$mvp/sum(players_2003$mvp)*100
+mvp_2003 = players_2003[with(players_2003, order(-mvp_odds)),]
+
+
+players_2002$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2002$per + 0.25109*players_2002$tovpercent + 0.56602*players_2002$dws))))
+players_2002$mvp_odds = players_2002$mvp/sum(players_2002$mvp)*100
+mvp_2002 = players_2002[with(players_2002, order(-mvp_odds)),]
+
+
+players_2001$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2001$per + 0.25109*players_2001$tovpercent + 0.56602*players_2001$dws))))
+players_2001$mvp_odds = players_2001$mvp/sum(players_2001$mvp)*100
+mvp_2001 = players_2001[with(players_2001, order(-mvp_odds)),]
+
+
+players_2000$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_2000$per + 0.25109*players_2000$tovpercent + 0.56602*players_2000$dws))))
+players_2000$mvp_odds = players_2000$mvp/sum(players_2000$mvp)*100
+mvp_2000 = players_2000[with(players_2000, order(-mvp_odds)),]
+
+
+players_1999$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1999$per + 0.25109*players_1999$tovpercent + 0.56602*players_1999$dws))))
+players_1999$mvp_odds = players_1999$mvp/sum(players_1999$mvp)*100
+mvp_1999 = players_1999[with(players_1999, order(-mvp_odds)),]
+
+
+players_1998$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1998$per + 0.25109*players_1998$tovpercent + 0.56602*players_1998$dws))))
+players_1998$mvp_odds = players_1998$mvp/sum(players_1998$mvp)*100
+mvp_1998 = players_1998[with(players_1998, order(-mvp_odds)),]
+
+
+players_1997$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1997$per + 0.25109*players_1997$tovpercent + 0.56602*players_1997$dws))))
+players_1997$mvp_odds = players_1997$mvp/sum(players_1997$mvp)*100
+mvp_1997 = players_1997[with(players_1997, order(-mvp_odds)),]
+
+
+players_1996$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1996$per + 0.25109*players_1996$tovpercent + 0.56602*players_1996$dws))))
+players_1996$mvp_odds = players_1996$mvp/sum(players_1996$mvp)*100
+mvp_1996 = players_1996[with(players_1996, order(-mvp_odds)),]
+
+
+players_1995$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1995$per + 0.25109*players_1995$tovpercent + 0.56602*players_1995$dws))))
+players_1995$mvp_odds = players_1995$mvp/sum(players_1995$mvp)*100
+mvp_1995 = players_1995[with(players_1995, order(-mvp_odds)),]
+
+players_1994$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1994$per + 0.25109*players_1994$tovpercent + 0.56602*players_1994$dws))))
+players_1994$mvp_odds = players_1994$mvp/sum(players_1994$mvp)*100
+mvp_1994 = players_1994[with(players_1994, order(-mvp_odds)),]
+
+players_1993$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1993$per + 0.25109*players_1993$tovpercent + 0.56602*players_1993$dws))))
+players_1993$mvp_odds = players_1993$mvp/sum(players_1993$mvp)*100
+mvp_1993 = players_1993[with(players_1993, order(-mvp_odds)),]
+
+players_1992$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1992$per + 0.25109*players_1992$tovpercent + 0.56602*players_1992$dws))))
+players_1992$mvp_odds = players_1992$mvp/sum(players_1992$mvp)*100
+mvp_1992 = players_1992[with(players_1992, order(-mvp_odds)),]
+
+players_1991$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1991$per + 0.25109*players_1991$tovpercent + 0.56602*players_1991$dws))))
+players_1991$mvp_odds = players_1991$mvp/sum(players_1991$mvp)*100
+mvp_1991 = players_1991[with(players_1991, order(-mvp_odds)),]
+
+players_1990$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1990$per + 0.25109*players_1990$tovpercent + 0.56602*players_1990$dws))))
+players_1990$mvp_odds = players_1990$mvp/sum(players_1990$mvp)*100
+mvp_1990 = players_1990[with(players_1990, order(-mvp_odds)),]
+
+players_1989$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1989$per + 0.25109*players_1989$tovpercent + 0.56602*players_1989$dws))))
+players_1989$mvp_odds = players_1989$mvp/sum(players_1989$mvp)*100
+mvp_1989 = players_1989[with(players_1989, order(-mvp_odds)),]
+
+
+
+
+
+
+
+
+
 ```
 
-```{r}
-rookies_2019 = anti_join(players_2019, players_all, by = 'player')
-rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$age + 0.0012159*rookies_2019$mp + 0.7284919*rookies_2019$orb + 0.4127871*rookies_2019$ast))))
-rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)
-players_2019 <- merge(players_2019, rookies_2019, all = TRUE)
-
-players_2019$mvp_odds = players_2019$mvp/sum(players_2019$mvp)*100
-
-players_2019[with(players_2019, order(-mvp_odds)),]
-
-```
+ROY Predictions
 
 ```{r}
 
-rookies_2019 = anti_join(players_2019, players_all,  by='player')
-
-
-rookies_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*rookies_2019$age + 0.0012159*rookies_2019$mp + 0.7284919*rookies_2019$orb + 0.4127871*rookies_2019$ast))))
-
-rookies_2019$roy_odds = rookies_2019$roy/sum(rookies_2019$roy)
-
-players_2019 <- join(players_2019, rookies_2019, type = "left")
-players_2019[is.na(players_2019)] <- 0
+players_2019$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2019$age + 0.0012159*players_2019$mp + 0.7284919*players_2019$orb + 0.4127871*players_2019$ast))))
+players_2019$roy_odds = players_2019$roy/sum(players_2019$roy)*100
 roy_2019 = players_2019[with(players_2019, order(-roy_odds)),]
-roy_2019
+
+players_2018$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2018$age + 0.0012159*players_2018$mp + 0.7284919*players_2018$orb + 0.4127871*players_2018$ast))))
+players_2018$roy_odds = players_2018$roy/sum(players_2018$roy)*100
+roy_2018 = players_2018[with(players_2018, order(-roy_odds)),]
+
+players_2017$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2017$age + 0.0012159*players_2017$mp + 0.7284919*players_2017$orb + 0.4127871*players_2017$ast))))
+players_2017$roy_odds = players_2017$roy/sum(players_2017$roy)*100
+roy_2017 = players_2017[with(players_2017, order(-roy_odds)),]
+
+players_2016$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2016$age + 0.0012159*players_2016$mp + 0.7284919*players_2016$orb + 0.4127871*players_2016$ast))))
+players_2016$roy_odds = players_2016$roy/sum(players_2016$roy)*100
+roy_2016 = players_2016[with(players_2016, order(-roy_odds)),]
+
+players_2015$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2015$age + 0.0012159*players_2015$mp + 0.7284919*players_2015$orb + 0.4127871*players_2015$ast))))
+players_2015$roy_odds = players_2015$roy/sum(players_2015$roy)*100
+roy_2015 = players_2015[with(players_2015, order(-roy_odds)),]
+
+players_2014$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2014$age + 0.0012159*players_2014$mp + 0.7284919*players_2014$orb + 0.4127871*players_2014$ast))))
+players_2014$roy_odds = players_2014$roy/sum(players_2014$roy)*100
+roy_2014 = players_2014[with(players_2014, order(-roy_odds)),]
+
+players_2013$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2013$age + 0.0012159*players_2013$mp + 0.7284919*players_2013$orb + 0.4127871*players_2013$ast))))
+players_2013$roy_odds = players_2013$roy/sum(players_2013$roy)*100
+roy_2013 = players_2013[with(players_2013, order(-roy_odds)),]
+
+players_2012$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2012$age + 0.0012159*players_2012$mp + 0.7284919*players_2012$orb + 0.4127871*players_2012$ast))))
+players_2012$roy_odds = players_2012$roy/sum(players_2012$roy)*100
+roy_2012 = players_2012[with(players_2012, order(-roy_odds)),]
+
+players_2011$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2011$age + 0.0012159*players_2011$mp + 0.7284919*players_2011$orb + 0.4127871*players_2011$ast))))
+players_2011$roy_odds = players_2011$roy/sum(players_2011$roy)*100
+roy_2011 = players_2011[with(players_2011, order(-roy_odds)),]
+
+players_2010$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2010$age + 0.0012159*players_2010$mp + 0.7284919*players_2010$orb + 0.4127871*players_2010$ast))))
+players_2010$roy_odds = players_2010$roy/sum(players_2010$roy)*100
+roy_2010 = players_2010[with(players_2010, order(-roy_odds)),]
+
+players_2009$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2009$age + 0.0012159*players_2009$mp + 0.7284919*players_2009$orb + 0.4127871*players_2009$ast))))
+players_2009$roy_odds = players_2009$roy/sum(players_2009$roy)*100
+roy_2009 = players_2009[with(players_2009, order(-roy_odds)),]
+
+players_2008$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2008$age + 0.0012159*players_2008$mp + 0.7284919*players_2008$orb + 0.4127871*players_2008$ast))))
+players_2008$roy_odds = players_2008$roy/sum(players_2008$roy)*100
+roy_2008 = players_2008[with(players_2008, order(-roy_odds)),]
+
+players_2007$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2007$age + 0.0012159*players_2007$mp + 0.7284919*players_2007$orb + 0.4127871*players_2007$ast))))
+players_2007$roy_odds = players_2007$roy/sum(players_2007$roy)*100
+roy_2007 = players_2007[with(players_2007, order(-roy_odds)),]
+
+players_2006$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2006$age + 0.0012159*players_2006$mp + 0.7284919*players_2006$orb + 0.4127871*players_2006$ast))))
+players_2006$roy_odds = players_2006$roy/sum(players_2006$roy)*100
+roy_2006 = players_2006[with(players_2006, order(-roy_odds)),]
+
+players_2005$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2005$age + 0.0012159*players_2005$mp + 0.7284919*players_2005$orb + 0.4127871*players_2005$ast))))
+players_2005$roy_odds = players_2005$roy/sum(players_2005$roy)*100
+roy_2005 = players_2005[with(players_2005, order(-roy_odds)),]
+
+players_2004$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2004$age + 0.0012159*players_2004$mp + 0.7284919*players_2004$orb + 0.4127871*players_2004$ast))))
+players_2004$roy_odds = players_2004$roy/sum(players_2004$roy)*100
+roy_2004 = players_2004[with(players_2004, order(-roy_odds)),]
+
+players_2003$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2003$age + 0.0012159*players_2003$mp + 0.7284919*players_2003$orb + 0.4127871*players_2003$ast))))
+players_2003$roy_odds = players_2003$roy/sum(players_2003$roy)*100
+roy_2003 = players_2003[with(players_2003, order(-roy_odds)),]
+
+players_2002$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2002$age + 0.0012159*players_2002$mp + 0.7284919*players_2002$orb + 0.4127871*players_2002$ast))))
+players_2002$roy_odds = players_2002$roy/sum(players_2002$roy)*100
+roy_2002 = players_2002[with(players_2002, order(-roy_odds)),]
+
+players_2001$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2001$age + 0.0012159*players_2001$mp + 0.7284919*players_2001$orb + 0.4127871*players_2001$ast))))
+players_2001$roy_odds = players_2001$roy/sum(players_2001$roy)*100
+roy_2001 = players_2001[with(players_2001, order(-roy_odds)),]
+
+players_2000$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_2000$age + 0.0012159*players_2000$mp + 0.7284919*players_2000$orb + 0.4127871*players_2000$ast))))
+players_2000$roy_odds = players_2000$roy/sum(players_2000$roy)*100
+roy_2000 = players_2000[with(players_2000, order(-roy_odds)),]
+
+players_1999$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1999$age + 0.0012159*players_1999$mp + 0.7284919*players_1999$orb + 0.4127871*players_1999$ast))))
+players_1999$roy_odds = players_1999$roy/sum(players_1999$roy)*100
+roy_1999 = players_1999[with(players_1999, order(-roy_odds)),]
+
+players_1998$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1998$age + 0.0012159*players_1998$mp + 0.7284919*players_1998$orb + 0.4127871*players_1998$ast))))
+players_1998$roy_odds = players_1998$roy/sum(players_1998$roy)*100
+roy_1998 = players_1998[with(players_1998, order(-roy_odds)),]
+
+players_1997$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1997$age + 0.0012159*players_1997$mp + 0.7284919*players_1997$orb + 0.4127871*players_1997$ast))))
+players_1997$roy_odds = players_1997$roy/sum(players_1997$roy)*100
+roy_1997 = players_1997[with(players_1997, order(-roy_odds)),]
+
+players_1996$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1996$age + 0.0012159*players_1996$mp + 0.7284919*players_1996$orb + 0.4127871*players_1996$ast))))
+players_1996$roy_odds = players_1996$roy/sum(players_1996$roy)*100
+roy_1996 = players_1996[with(players_1996, order(-roy_odds)),]
+
+players_1995$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1995$age + 0.0012159*players_1995$mp + 0.7284919*players_1995$orb + 0.4127871*players_1995$ast))))
+players_1995$roy_odds = players_1995$roy/sum(players_1995$roy)*100
+roy_1995 = players_1995[with(players_1995, order(-roy_odds)),]
+
+players_1994$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1994$age + 0.0012159*players_1994$mp + 0.7284919*players_1994$orb + 0.4127871*players_1994$ast))))
+players_1994$roy_odds = players_1994$roy/sum(players_1994$roy)*100
+roy_1994 = players_1994[with(players_1994, order(-roy_odds)),]
+
+players_1993$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1993$age + 0.0012159*players_1993$mp + 0.7284919*players_1993$orb + 0.4127871*players_1993$ast))))
+players_1993$roy_odds = players_1993$roy/sum(players_1993$roy)*100
+roy_1993 = players_1993[with(players_1993, order(-roy_odds)),]
+
+players_1992$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1992$age + 0.0012159*players_1992$mp + 0.7284919*players_1992$orb + 0.4127871*players_1992$ast))))
+players_1992$roy_odds = players_1992$roy/sum(players_1992$roy)*100
+roy_1992 = players_1992[with(players_1992, order(-roy_odds)),]
+
+players_1991$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1991$age + 0.0012159*players_1991$mp + 0.7284919*players_1991$orb + 0.4127871*players_1991$ast))))
+players_1991$roy_odds = players_1991$roy/sum(players_1991$roy)*100
+roy_1991 = players_1991[with(players_1991, order(-roy_odds)),]
+
+players_1990$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1990$age + 0.0012159*players_1990$mp + 0.7284919*players_1990$orb + 0.4127871*players_1990$ast))))
+players_1990$roy_odds = players_1990$roy/sum(players_1990$roy)*100
+roy_1990 = players_1990[with(players_1990, order(-roy_odds)),]
+
+players_1989$roy = as.numeric(1/(1+exp(-1*(12.8345287 + -1.0762097*players_1989$age + 0.0012159*players_1989$mp + 0.7284919*players_1989$orb + 0.4127871*players_1989$ast))))
+players_1989$roy_odds = players_1989$roy/sum(players_1989$roy)*100
+roy_1989 = players_1989[with(players_1989, order(-roy_odds)),]
 ```
 
+DPOY predictions
 
 ```{r}
 #DPOY predictions
@@ -534,6 +795,8 @@ players_1989$dpoy_odds = players_1989$dpoy/sum(players_1989$dpoy)*100
 dpoy_1989 = players_1989[with(players_1989, order(-dpoy_odds)),]
 ```
 
+6th man of the year predictions
+
 ```{r}
 #6th man of the year predictions
 
@@ -664,62 +927,11 @@ smoy_1989 = players_1989[with(players_1989, order(-smoy_odds)),]
 
 ```
 
-```{r}
-mip_2019_new = join(players_2019, players_2018, by = "player", type = "inner")
-mip_2019_old = join(players_2018, players_2019, by = "player", type = "inner")
-player = mip_2019_new$player
-mip_2019 = data.frame(player)
-mip_2019$age = mip_2019_new$age
-mip_2019$tov = mip_2019_new$tov - mip_2019_old$tov
-mip_2019$x3p = mip_2019_new$x3p - mip_2019_old$x3p
-mip_2019$x3pa = mip_2019_new$x3pa - mip_2019_old$x3pa
-mip_2019$mip = as.numeric(1/(1+exp(-1*(-5.4244556 + 0.8269561*mip_2019$tov + -0.2037588*mip_2019$age + 3.8753971*mip_2019$x3p + -1.3835910*mip_2019$x3pa)))^9)
-mip_2019$mip_odds = mip_2019$mip/sum(mip_2019$mip)
-test = mip_2019[with(mip_2019, order(-mip_odds)),]
-displayed = within(test, rm(player))
-radarchart(displayed[1,], maxmin = FALSE)
-colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
-```
-
-
-
-```{r}
-df_mvp <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$mvp_odds)  
-df_mvp =df_mvp[with(df_mvp, order(-Chance)),]
-df_mvp
-
-df_roy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$roy_odds)  
-df_roy =df_roy[with(df_roy, order(-Chance)),]
-df_roy
-
-df_dpoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$dpoy_odds)  
-df_dpoy =df_dpoy[with(df_dpoy, order(-Chance)),]
-df_dpoy
-
-df_smoy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$smoy_odds)  
-df_smoy =df_smoy[with(df_smoy, order(-Chance)),]
-df_smoy
-```
-
+Normalize statistics to get quantile data
 
 ```{r}
 
-players_1990$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1990$per + 0.25109*players_1990$tovpercent + 0.56602*players_1990$dws))))
-players_1990$mvp_odds = players_1990$mvp/sum(players_1990$mvp)
-mvp_1990 = players_1990[with(players_1990, order(-mvp_odds)),]
-
-players_1991$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1991$per + 0.25109*players_1991$tovpercent + 0.56602*players_1991$dws))))
-players_1991$mvp_odds = players_1991$mvp/sum(players_1991$mvp)
-mvp_1991 = players_1991[with(players_1991, order(-mvp_odds)),]
-
-players_1991$mvp = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*players_1991$per + 0.25109*players_1991$tovpercent + 0.56602*players_1991$dws))))
-players_1991$mvp_odds = players_1991$mvp/sum(players_1991$mvp)
-mvp_1991 = players_1991[with(players_1991, order(-mvp_odds)),]
-
-```
-
-```{r}
-
+#Normalize statistics to get quantile data
 
 normalize_data <- function(x) {
   return((100)*(x - rep(min(x), length(x))) / (rep(max(x), length(x)) - rep(min(x), length(x))))
@@ -729,53 +941,3 @@ normalize_data <- function(x) {
 ```
 
 
-
-```{r}
-mvp_1990_graph_display = mvp_1990[,c("player","per", "tspercent", "pts", "ast", "trb")]
-for (i in colnames(mvp_1990_graph_display)) {
-  if (i == "player") {
-    
-    next;
-  }
-  mvp_1990_graph_display[,i] = normalize_data(mvp_1990_graph_display[,i])
-}
-
-p <- plot_ly(
-    type = 'scatterpolar',
-    fill = 'toself'
-  ) %>%
-  add_trace(
-    r = as.numeric(mvp_1990_graph_display[1, c("per", "tspercent", "pts", "ast", "trb")]),
-    theta = c('per','tspercent','pts', 'ast', "trb"),
-    name = mvp_1990_graph_display[1, "player"]
-  ) %>%
-  layout(
-    polar = list(
-      radialaxis = list(
-        visible = T,
-        range = c(0, 100)
-      )
-    )
-  )
-
-  
-p
-```
-
-
-
-```{r}
-
-for (i in years) {
-  df_name = paste0("players_",i)
-  
-  test = as.data.table(get(df_name), keep.rownames = TRUE)
-  set(test, j = "mvp", value = as.numeric(1/(1+exp(-1*(-29.55824 + 0.65215*test$per + 0.25109*test$tovpercent +   0.56602*test$dws)))))
-  set(test, j = "dpoy", value = as.numeric(1/(1+exp(-1*(-7.6440321 + 1.6298305*test$dws + -0.3212441*test$usgpercent + 0.3284959*test$per + -0.0018602*test$mp)))))
-  set(test, j = "dpoy_odds", value = test$dpoy/sum(test$dpoy))
-  set(test, j = "mvp_odds", value = test$mvp/sum(test$mvp))
-  assign(paste0("awards_", i), test[with(test, order(-test[,c("dpoy_odds", "mvp_odds")]))])
-}
-
-
-```

@@ -5,7 +5,7 @@ library(shinyWidgets)
 #shiny background color
 
 ui = fluidPage(
-  tags$h2("Change shiny app background"),
+  tags$h2(""),
   setBackgroundColor("snow"),
   titlePanel("NBA Awards Predictor"), # Title
   
@@ -28,7 +28,7 @@ ui = fluidPage(
       tabsetPanel(
         tabPanel(
           "Summary",
-      "Top Five Predictions",
+      "Top Six Predictions",
       verbatimTextOutput("predictions")
         ),
       tabPanel(
@@ -54,6 +54,11 @@ ui = fluidPage(
       tabPanel(
         "Radar Plot of 5th Place",
         plotlyOutput("radar5"),
+        style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot of 6th Place",
+        plotlyOutput("radar6"),
         style = "border-color: white"
       )
       )
@@ -277,6 +282,27 @@ server = function(input, output, session) {
         )
       )
   )
+  
+  output$radar6 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[6, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[6, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
+  
 
 }
 # Launch the App
