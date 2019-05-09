@@ -14,11 +14,7 @@ always_allow_html: yes # required for PDF
 
 
 ```{r,echo=FALSE}
-<<<<<<< HEAD
 pkg_list = c("ggplot2", "plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "fmsb", "rsconnect", "plotly", "data.table")
-=======
-pkg_list = c("plyr", "tidyr", "dplyr", "rvest", "stringr", "ballr", "magrittr", "rsconnect", "plotly", "data.table")
->>>>>>> 7b9d8d1a1f91cdf39cf6817543a2532c6252c391
 mia_pkgs = pkg_list[!(pkg_list %in% installed.packages()[,"Package"])]
 if(length(mia_pkgs) > 0) install.packages(mia_pkgs)
 loaded_pkgs = lapply(pkg_list, require, character.only=TRUE)
@@ -439,7 +435,7 @@ colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
 
 ```{r}
 df_mvp <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$mvp_odds)  
-df_mvp =df_mvp[with(df$mvp, order(-Chance)),]
+df_mvp =df_mvp[with(df_mvp, order(-Chance)),]
 df_mvp
 
 df_roy <- data.frame(Player = players_2019$player, Position = players_2019$pos, Age = players_2019$age, Chance = players_2019$roy_odds)  
@@ -468,7 +464,7 @@ mvp_1990 = players_1990[with(players_1990, order(-mvp_odds)),]
 ```{r}
 
 
-normalize_data <- function(x, year) {
+normalize_data <- function(x) {
   return((100)*(x - rep(min(x), length(x))) / (rep(max(x), length(x)) - rep(min(x), length(x))))
 }
 
