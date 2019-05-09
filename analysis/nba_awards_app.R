@@ -135,7 +135,7 @@ server = function(input, output, session) {
     df_predictions = data.frame(Player = active_dataset()$player, 
                              Position = active_dataset()$pos, 
                              Age = active_dataset()$age,
-                             Chance = active_predictions()) 
+                             Probability = active_predictions()) 
     return(df_predictions)
   })
 
@@ -143,7 +143,7 @@ server = function(input, output, session) {
     cleaning_df = data.frame(Player = active_dataset()$player, 
                     Position = active_dataset()$pos, 
                     Age = active_dataset()$age,
-                    Chance = active_awards()) 
+                    Probability = active_awards()) 
     return(cleaning_df)
   })
 
@@ -155,8 +155,8 @@ server = function(input, output, session) {
                           pts = active_dataset()$pts, 
                           ast = active_dataset()$ast, 
                           trb = active_dataset()$trb,
-                          Chance = active_predictions())
-    df_graph = df_graph[with(df_graph, order(-Chance)),]
+                          Probability = active_predictions())
+    df_graph = df_graph[with(df_graph, order(-Probability)),]
     df_graph = df_graph[,-7]
     return(df_graph)
   })
@@ -176,11 +176,11 @@ server = function(input, output, session) {
   })
   #create column for players and percentages
   output$predictions = renderPrint(
-      head(df_predictions()[with(df_predictions(), order(-Chance)),])
+      head(df_predictions()[with(df_predictions(), order(-Probability)),])
   )
   
   output$winner = renderPrint(
-    cleaning_df()[cleaning_df()$Chance == 1,]
+    cleaning_df()[cleaning_df()$Probability == 1,]
   )
   
   output$radar1 = renderPlotly(
