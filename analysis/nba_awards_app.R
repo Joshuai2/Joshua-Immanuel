@@ -1,7 +1,8 @@
 library(shiny)
 library(fmsb)
 library(gridExtra)
-library(shinyWidgets) #shiny background color
+library(shinyWidgets) 
+#shiny background color
 
 ui = fluidPage(
   tags$h2("Change shiny app background"),
