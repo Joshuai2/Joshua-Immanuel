@@ -10,7 +10,7 @@ ui = fluidPage(
       # Dropdowns
       selectInput(inputId ="award", "What award do you want to predict?", 
                   choices = c("MVP", "Rookie of the Year", "Defensive Player of the Year",
-                              "Sixth Man", "Most Improved Player")),
+                              "Sixth Man")),
       
       numericInput(inputId = "year", label = ("Year (e.g. 1980)"), 
                    value = 2019, min = 1989, max = 2019),
@@ -19,7 +19,7 @@ ui = fluidPage(
     ),
     
     mainPanel(
-      h3("Top Five Predictions"),
+      h3("2019 Top Five Predictions"),
       verbatimTextOutput("predictions")
       
       #h3("Radar Plot"),
@@ -30,20 +30,18 @@ ui = fluidPage(
 
 # Define server logic ----
 server = function(input, output, session) {
-  
+
   active_awards = eventReactive(input$button, {
-    switch(active_awards(), 
-           "MVP" = active_dataset()$mvp_odds,
-           "Rookie of the Year" = active_dataset()$roy_odds,
-           "Defensive Player of the Year" = active_dataset()$dpoy_odds,
-           "Sixth Man" = active_dataset()$smoy_odds
-           #"Most Improved Player" = active_dataset()[with(mip_2019, order(-mip_odds)),] different dataset
-    )
+    switch(input$award, 
+           "MVP" = active_dataset(), "Rookie of the Year", "Defensive Player of the Year",
+           "Sixth Man"
+           )
   })
+  active_year = eventReactive(input$button, input$year)
   
   #matching dataset year
   active_dataset = eventReactive(input$button, {
-    switch(paste0("players_", input$year),
+    switch(paste0("players_", active_year()),
            "players_1989" = players_1989,
            "players_1990" = players_1990,
            "players_1991" = players_1991,
@@ -78,14 +76,15 @@ server = function(input, output, session) {
            
            )
   })
-  #fit_mvp = eventReactive(input$perform, ) if we can generalize the fit, then develop this
-
+  
+ # active_cleandat = eventReactive(input$button, {
+  #  df = data.frame(player = active_dataset()$
+  #})
   #create column for players and percentages
-  cleaning_data = eventReactive(input$button, {
-    cbind(active_dataset$player, active_awards())
-  })
   output$predictions = renderPrint(
-    cleaning_data()
+    if(active_year() == 2019){
+   head(active_dataset())
+    }
   )
   
   

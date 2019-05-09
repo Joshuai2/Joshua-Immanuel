@@ -458,7 +458,9 @@ players_2019$smoy = ifelse(players_2019$gs < 41, as.numeric(1/(1+exp(-1*(-4.334e
 players_2019$smoy_odds = players_2019$smoy/sum(players_2019$smoy)
 
 players_2019[with(players_2019, order(-smoy_odds)),]
-  
+
+df <- data.frame(player = players_2019$player, position = players_2019$pos, age = players_2019$age)  
+df
 ```
 
 
