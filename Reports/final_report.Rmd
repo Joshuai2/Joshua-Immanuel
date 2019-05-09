@@ -2,7 +2,7 @@
 title: "Trust the pRocess: NBA Award Predictions"
 subtitle: "STAT 385 SP2019 - Team Hurst"
 abstract: |
-          | This project will involve looking at 30 years of individual NBA player statistics. We will develop a number of new advanced analytics and statistics to determine player efficient and value. Using these numbers, we will rank players and determine who should win prominent NBA awards. We will visualize these results using bar graphs and sentiment analysis.
+          | This project will involve looking at 30 years of individual NBA player statistics. We will run an analysis using this historical data to develop a regression function for each individual regular season award in the NBA (Most Valuable Player, Defensive Player of the Year, Rookie of the Year, and Sixth Man of the Year). We will use this to determine every player's likelihood of winning each award. We will visualize these results using radar charts in a Shiny app.
           |
           
 date: "May 9th, 2019"
@@ -11,9 +11,10 @@ author:
   - Eric Qian (ewqian2)
   - Joshua Immanuel (joshuai2)
   - Bhanuchandra Kappala (kappala2)
-bibliography: bibliography.bib
 output: 
   bookdown::pdf_document2
+bibliography: bibliography.bib
+nocite: '@*'
 ---
 
 ```{r set-options, include = FALSE}
@@ -45,7 +46,7 @@ if(length(to_install_pkgs)) {
 # Load all packages
 sapply(pkg_list, require, character.only = TRUE)
 ```
-
+-
 <!-- Force a new page -->
 \newpage
 
@@ -59,74 +60,41 @@ While fans and media pundits try to guess the winners of the major NBA awards (M
   
   Valuing player assets are important. Being able to accurately determine player value is one of the most fundamental skills in basketball front offices. Being able to do so accurately can be the difference between winning and losing. Many different subjects (statistitcs, differential equations, analytics) can be applied to these problems. With the success of Daryl Morey and Sam Hinkie, we see that these approaches have been successful in the NBA. Many interesting and unsolved issues in the NBA require statistical analysis, which is why we chose this project.
   
+  Our shared passion of basketball and the NBA led us to this topic. This is a topic that some of us have talked about and  previous academic curiousity have led us to this topic. We wanted to know if we could use a variety of variables to accurately predict NBA Award winners.
+  
 ## Description of the data
 
-The data is a series of dataframes of regular and advanced statistics spanning from 1989 and 2019. 
+The data is a series of dataframes of regular and advanced statistics spanning from 1989 and 2019. The statistics are listed and explained in the Appendix. Our data will come from the NBA Reference website. It will be 30 years of individual player data. The long time period and amount of data for our data points will allow us for a greater degree of accuracy and precision in the evaluation of our model.
 
 
-
-
-
-
+## Connection to the Course
   
-- Cite papers or reputable sources that back up this claim. (You may want to find - material using Google Scholar.)
-<http://www.basketballanalyticsbook.com/>
-<https://www.nbastuffer.com/analytics-101/>
-<https://squared2020.com/>
-
-- Where did the problem or topic come from?
-
-Our shared passion of basketball and the NBA led us to this topic. This is a topic that some of us have talked about and  previous academic curiousity have led us to this topic. We wanted to know if we could use a variety of variables to accurately predict NBA Award winners.
-
-- What is your idea for addressing the problem or topic?
-
-First, find and clean NBA player data. Then create a series of advanced metrics to measure player performances. Train a model that utilizes these metrics to correlate them with team success. Finally, calculate total offensive value, total defensive value, and total overall value to determine player awards. Finally, test its predictive power on a series of previous award winners and visualize our results.
-
-- How does your idea match with the course’s focus on statistical programming?
-
 We will be dealing with large datasets, validating data, and building statistical models. All of these skills form the foundations of statistical programming and we will apply what we have learned in our project.
-
--What is our data? Where did it come from? How will it be useful in answering your problem?
-
-Our data will come from the official NBA website. It will be 30 years of individual player data. The long time period and amount of data for our data points will allow us for a greater degree of accuracy and precision in the evaluation of our model.
-
-<https://stats.nba.com/>
 
 # Related Work
 
-Address the following questions:
-
-- What other ideas have been attempted?
+## Previous Approaches
 
 While not specifically related to this project, the application of sabermetrics has become a point of interest for many baseball teams. Likewise, we have began to see this same transition in basketball analytics. The long term view of teams that have embraced analytics has been very good: the Philadelphia 76ers and Houston Rockets are both top seeded teams that have a significant chance at being the Championship team. While we haven't seen rigorous academic analysis of predicting NBA awards, there have been some implementations done by various individuals. There are also award trackers that just use raw data - specifically VORP (Value over Replacement Player) and PER (Player Efficiency Rating) and the player with the highest value is predicted to win. While these ways of predicting awards works somewhat well, they tend to have problems undervaluing certain players (the inventor of PER notes that it is not an end all metric - it rewards inefficient shooting and doesn't sufficiently reward effective defense) so our idea will be unique.
 
-- Why is your team's idea original compared to prior work?
+## Originality
 
 A lot of the statistics in use with modern publications are based on the research of one individual: Daryl Morey. We will derive our own variables and determine how impactful they are in determining wins using a regression  model. By doing so, we will establish other variables and metrics that may be better suited for different situations and will allow for better comparison of players across time periods and eras.
 
 # Methods
 
-The **methods** section should discuss how you plan to solve your problem.
-The overall details of the project including any preliminary work. In 
-particular, the implementation details behind the approach should be explained
-at length here. The more details you can provide, the better feedback your
-group can receive. As a result, the section serves as a roadmap of what features
-are going to be developed and any external dependencies that are required. 
-**The majority of your code should be _suppressed_ from the displaying in this
-section**. Please refer to code and figures placed in the appendix. The latter can be referenced using: 
+First we use the ballr package [@ballr] to pull the statistical data from Basketball Reference website [@bball_ref]. Then we clean and combine the data using the concepts of "tidy data" [@tidyr]. We introduce dummy variables with respect to position (C, SG, SF, PF, PG).  
 
-```
-Figure \@ref(fig:code-chunk-name-here).
-```
+For the interactive interface, we have created a Shiny App. The user can choose both the year (between 1989 and 2019) and the award to be predicted. 
 
-For example, the figure of the data science workflow is accessible via
-Figure \@ref(fig:data-science-workflow).
+In order to visualize the data, we give radar plots of different attributes important for each of the awards. Next to this is the probability that that person would win the award.
+
 
 To satisfy this section, provide detailed responses for the following:
 
 - What packages will you use in your implementation?
   - Data transformation: tidyr, dplyr, ballr
-  - Data visualization: ggplot2, plotly, gganimate
+  - Data visualization: plotly
   - Interactive Interface: shiny
   - Regression Analysis: leaps, glmnet, caret
   
@@ -144,9 +112,6 @@ To satisfy this section, provide detailed responses for the following:
         We will use a horizontal bar graph where the y-axis contains the player's names and the x-axis contains the predicted percentage scores. We will put a picture of the athlete on the right side of their respective bars. The user will be able to interact with the graph by toggling on the face of the athlete and a word cloud will appear. The word cloud will consist of the google trending discussions on the athlete.
         - Label axes, provide a title, and mention any interactivity.
     - Interface
-        - All projects need a Shiny Application.
-        - Sketch how a user will work with the shiny application.
-        ![Visualization](Low Fidelity Model.jpeg)
 
 - What have you done or learned so far for the project? 
 
@@ -164,7 +129,15 @@ project has:
 - Interactive Interface (e.g. [`shiny`](https://shiny.rstudio.com/))
 - Reproducibility
 
-# Feasibility
+# Results
+
+
+
+# Discussion
+
+# Conclusion
+
+Overall, the project was generally successful. We took historical data and 
 
 The **Feasibility** section is meant to act as a way to reflect upon the proposal.
 Generally speaking, there will be three weeks of heavy development time afforded
@@ -209,8 +182,72 @@ and sentiment analysis.
 
 # Appendix
 
-The **Appendix** section contains figures, sample data, and other miscellaneous
-entries. Generally, this sketch seeks to contain all of your _planning_ information.
+## Variables
+
+- player - name of the player
+- pos - position
+- age - age
+- g - games played
+- mp - minutes played
+- per - player efficiency rating
+
+$$
+per = (1 / mp) * [3p + (2/3) * ast + (2 - factor * (ast_{team} / fg_{team})) * fg + (ft *0.5 * (1 + (1 - (ast_{team} / fg_{team}))
+$$
+$$
++ (2/3) * (ast_{team} / fg_{team}))) - vop * tov - vop * drb\% * (fga - fg) - vop * 0.44 * (0.44 + (0.56 * drb\%)) * (fta - ft) 
+$$
+$$
++ vop * (1 - drb\%) * (drb) + vop * drb\% * orb + vop * stl + vop * drb\% * blk - pf * ((ft_{league} / pf_{league}) - 0.44 * (fta_{league}/pf_{league}) * vop)]
+$$
+
+- tspercent - true shooting percent
+
+$$
+tspercent = \frac{pts}{2*(fga + (0.44*fta))}*100
+$$
+- x3par - 3 point attempt rate
+- ows - offensive win shares
+- dws - defensive win shares
+- trbpercent - total rebound percentage
+- astpercentage - assist percentage
+- blkpercent - block percentage
+- tovpercent - turnover percentage
+- usgpercent - usage percentage
+- ftr - free throw rate
+- ws - win shares
+- ws_48 - win shares per 48 minutes
+- gs - games started 
+- fg - field goals made
+- fga - field goals attempted
+- fgpercent - field goal percentage
+- orb - offensive rebounds
+- drb - defensive rebounds
+- trb - total rebounds
+- x3p - 3 pointers made
+- x3pa - 3 pointers attempted
+- x3ppercent - 3 point percentage
+- x2p - 2 pointers made
+- x2pa - 2 pointers attempted
+- x2ppercent - 2 point percentage
+- ast - assists
+- stl - steals
+- ft - free throws
+- fta - free throw attempts
+- ftpercent - free throw percentage
+- blk - blocks
+- tov - turnovers
+- pf - personal fouls
+- pts - points per game
+- efgpercent - effective field goal percentage
+- obpm - offensive box plus/minus
+- dbpm - defensive box plus/minus
+- bpm - total box plus/minus
+- vorp - value over replacement player
+
+
+
+to contain all of your _planning_ information.
 
 - Provide the sketches of visualisations and the shiny application.
 - Provide an overview on the desired functions.
@@ -283,8 +320,8 @@ $$
 $$
 
 You **are** required to use BibTeX for references. With BibTeX, we could 
-reference the `rmarkdown` paper [@allaire2015rmarkdown] or the tidy data paper.
-[@wickham2014tidy] Some details can be found in the 
+reference the `rmarkdown` paper or the tidy data paper.
+ Some details can be found in the 
 [`bookdown` book](https://bookdown.org/yihui/bookdown/citations.html). Also,
 hint, [Google Scholar](https://scholar.google.com/) makes obtaining BibTeX 
 reference extremely easy. For more details, see the next section...
@@ -294,41 +331,5 @@ reference extremely easy. For more details, see the next section...
 
 # References
 
-The **References** section acts as a bibliography for all papers referenced
-in the **Introduction**, **Related Works**, and **Method** sections. The
-references should be formated in Chicago author-date format, which is the
-default for RMarkdown.
 
-* Provide a list (5+) of papers or items you have read to write this proposal. 
-* Please list all _R_ packages or software referenced.
 
-To acquire software citation information, _R_ has a built-in command
-that creates a BibTex and in-line text citation. To generate the citation
-of an installed _R_ package, type:
-
-```r
-# In R
-citation(package="pkg_name")
-```
-
-For example, to cite `dplyr`, one would generate the BibTex entry from:
-
-```r
-citation(package="dplyr")
-```
-
-```latex
-@Manual{dplyr:2018,
-    title = {dplyr: A Grammar of Data Manipulation},
-    author = {Hadley Wickham and Romain François and Lionel Henry and Kirill Müller},
-    year = {2018},
-    note = {R package version 0.7.7},
-    url = {https://CRAN.R-project.org/package=dplyr},
-}
-```
-
-Note, we added a "name" to the autogenerated citation of `dplyr:2018`. Using
-this name, we can reference the work within the paper via [@dplyr:2018] or @dplyr:2018.
-
-<!-- Remove the newpage break when the above text is no longer useful -->
-\newpage

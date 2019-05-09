@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.1.30)  9 MAY 2019 00:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2019.1.30)  9 MAY 2019 07:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1002,65 +1002,73 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 162.
-
-(/usr/share/texmf/tex/latex/lm/ts1lmr.fd
-File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [2]
-LaTeX Font Info:    Try loading font information for T1+lmtt on input line 227.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
+LaTeX Font Info:    Try loading font information for T1+lmtt on input line 194.
 
 (/usr/share/texmf/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
 LaTeX Warning: Reference `fig:data-science-workflow' on page 3 undefined on inp
-ut line 232.
+ut line 199.
 
-[3] <Low Fidelity Model.jpeg, id=100, 770.88pt x 1027.84pt>
-File: Low Fidelity Model.jpeg Graphic file (type jpg)
-<use Low Fidelity Model.jpeg>
-Package pdftex.def Info: Low Fidelity Model.jpeg used on input line 299.
-(pdftex.def)             Requested size: 404.04759pt x 538.73012pt.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 206.
 
-Overfull \hbox (232.72401pt too wide) in paragraph at lines 298--300
-[]\T1/lmr/m/n/10 (-20) Sketch how a user will work with the shiny ap-pli-ca-tio
-n. [] 
+(/usr/share/texmf/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+) [3] [4]
+Overfull \hbox (55.91533pt too wide) detected at line 387
+\OT1/lmr/m/n/10 +\OML/lmm/m/it/10 vop \OMS/lmsy/m/n/10 ^^C \OT1/lmr/m/n/10 (1 \
+OMS/lmsy/m/n/10 ^^@ \OML/lmm/m/it/10 drb\OT1/lmr/m/n/10 %) \OMS/lmsy/m/n/10 ^^C
+ \OT1/lmr/m/n/10 (\OML/lmm/m/it/10 drb\OT1/lmr/m/n/10 ) + \OML/lmm/m/it/10 vop 
+\OMS/lmsy/m/n/10 ^^C \OML/lmm/m/it/10 drb\OT1/lmr/m/n/10 % \OMS/lmsy/m/n/10 ^^C
+ \OML/lmm/m/it/10 orb \OT1/lmr/m/n/10 + \OML/lmm/m/it/10 vop \OMS/lmsy/m/n/10 ^
+^C \OML/lmm/m/it/10 stl \OT1/lmr/m/n/10 + \OML/lmm/m/it/10 vop \OMS/lmsy/m/n/10
+ ^^C \OML/lmm/m/it/10 drb\OT1/lmr/m/n/10 % \OMS/lmsy/m/n/10 ^^C \OML/lmm/m/it/1
+0 blk \OMS/lmsy/m/n/10 ^^@ \OML/lmm/m/it/10 pf \OMS/lmsy/m/n/10 ^^C \OT1/lmr/m/
+n/10 ((\OML/lmm/m/it/10 ft[]=pf[]\OT1/lmr/m/n/10 ) \OMS/lmsy/m/n/10 ^^@ \OT1/lm
+r/m/n/10 0\OML/lmm/m/it/10 :\OT1/lmr/m/n/10 44 \OMS/lmsy/m/n/10 ^^C \OT1/lmr/m/
+n/10 (\OML/lmm/m/it/10 fta[]=pf[]\OT1/lmr/m/n/10 ) \OMS/lmsy/m/n/10 ^^C \OML/lm
+m/m/it/10 vop\OT1/lmr/m/n/10 )]
  []
 
-[4 <./Low Fidelity Model.jpeg>] [5] [6]
+[5]
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <10> not available
-(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 464.
-LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 467
+(Font)              Font shape `T1/lmtt/b/n' tried instead on input line 477.
+LaTeX Font Info:    Try loading font information for TS1+lmtt on input line 480
 .
 (/usr/share/texmf/tex/latex/lm/ts1lmtt.fd
 File: ts1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [7] [8] [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 621.
-[10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 621.
+)
+Underfull \vbox (badness 1092) detected at line 517
+ []
+
+[6] [7]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 622.
+[8]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 622.
 (./final_report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 621.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 621.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 622.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 622.
 Package rerunfilecheck Info: File `final_report.out' has not changed.
-(rerunfilecheck)             Checksum: 9EB0BF3E46437010F241DEDF35660F26;1224.
+(rerunfilecheck)             Checksum: 99E98688D29E22557072E16E1D410ED1;1784.
 
 LaTeX Warning: There were undefined references.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 621.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 622.
  ) 
 Here is how much of TeX's memory you used:
- 13071 strings out of 494944
- 188313 string characters out of 6180677
- 293183 words of memory out of 5000000
- 16030 multiletter control sequences out of 15000+600000
- 62263 words of font info for 92 fonts, out of 8000000 for 9000
+ 13087 strings out of 494944
+ 188507 string characters out of 6180677
+ 292374 words of memory out of 5000000
+ 16034 multiletter control sequences out of 15000+600000
+ 61967 words of font info for 89 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 31i,5n,35p,1068b,485s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 31i,5n,35p,1068b,451s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/en
-c/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}{/u
-sr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/fonts/enc/dvips/l
-m/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}</usr/share/texmf/f
+c/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/s
+hare/texmf/fonts/enc/dvips/lm/lm-ts1.enc}{/usr/share/texmf/fonts/enc/dvips/lm/l
+m-ec.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}</usr/share/texmf/f
 onts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx12.
 pfb></usr/share/texmf/fonts/type1/public/lm/lmbx9.pfb></usr/share/texmf/fonts/t
 ype1/public/lm/lmbxi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb><
@@ -1074,10 +1082,10 @@ type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy7.pfb></
 usr/share/texmf/fonts/type1/public/lm/lmtk10.pfb></usr/share/texmf/fonts/type1/
 public/lm/lmtt10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtti10.pfb></usr/
 share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on final_report.pdf (10 pages, 444463 bytes).
+Output written on final_report.pdf (8 pages, 389453 bytes).
 PDF statistics:
- 254 PDF objects out of 1000 (max. 8388607)
- 218 compressed objects within 3 object streams
- 47 named destinations out of 1000 (max. 500000)
- 12382 words of extra memory for PDF output out of 14400 (max. 10000000)
+ 286 PDF objects out of 1000 (max. 8388607)
+ 253 compressed objects within 3 object streams
+ 65 named destinations out of 1000 (max. 500000)
+ 12409 words of extra memory for PDF output out of 14400 (max. 10000000)
 
