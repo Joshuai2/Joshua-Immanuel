@@ -1,8 +1,11 @@
 library(shiny)
 library(fmsb)
 library(gridExtra)
+library(shinyWidgets) #shiny background color
 
 ui = fluidPage(
+  tags$h2("Change shiny app background"),
+  setBackgroundColor("snow"),
   titlePanel("NBA Awards Predictor"), # Title
   
   sidebarLayout(
@@ -21,14 +24,43 @@ ui = fluidPage(
     ),
     
     mainPanel(
-      h3("2019 Top Five Predictions"),
+      tabsetPanel(
+        tabPanel(
+          "Summary",
+      "2019 Top Five Predictions",
       verbatimTextOutput("predictions"),
       
-      h3("Award Winner"),
+        
+      "Award Winner",
       verbatimTextOutput("winner"),
-      
-      h3("Radar Plot"),
-      plotOutput("radar")
+      style = "border-color: white"
+      ),
+      tabPanel(
+      "Radar Plot Predicted Player 1",
+      plotlyOutput("radar1"),
+      style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 2",
+        plotlyOutput("radar2"),
+        style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 3",
+        plotlyOutput("radar3"),
+        style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 4",
+        plotlyOutput("radar4"),
+        style = "border-color: white"
+      ),
+      tabPanel(
+        "Radar Plot Predicted Player 5",
+        plotlyOutput("radar5"),
+        style = "border-color: white"
+      )
+      )
     )
   )
 )
@@ -140,15 +172,14 @@ server = function(input, output, session) {
   })
   #create column for players and percentages
   output$predictions = renderPrint(
-      #head(df_predictions()[with(df_predictions(), order(-Chance)),])
-    active_radar()
+      head(df_predictions()[with(df_predictions(), order(-Chance)),])
   )
   
   output$winner = renderPrint(
     cleaning_df()[cleaning_df()$Chance == 1,]
   )
   
-  output$radar = renderPlotly(
+  output$radar1 = renderPlotly(
     plot_ly(
       type = 'scatterpolar',
       fill = 'toself'
@@ -168,8 +199,85 @@ server = function(input, output, session) {
       )
   )
   
+  output$radar2 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[2, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[2, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
   
+  output$radar3 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[3, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[3, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
   
+  output$radar4 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[4, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[4, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
+  
+  output$radar5 = renderPlotly(
+    plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(active_radar()[5, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = active_radar()[5, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+  )
 
 }
 # Launch the App
