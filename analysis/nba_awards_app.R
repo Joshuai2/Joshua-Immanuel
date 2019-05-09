@@ -93,7 +93,15 @@ server = function(input, output, session) {
                     Chance = active_awards()) 
     return(cleaning_df)
   })
+<<<<<<< HEAD
 
+=======
+  
+  graph_prep = eventReactive(input$button,{
+    graph_prep = active_dataset()[,c("player","per", "tspercent", "pts", "ast", "trb")]
+  })
+ 
+>>>>>>> 631351921f05fe07862780d90d85dc2d70d5c6ea
   #create column for players and percentages
   output$predictions = renderPrint(
   if(active_year() == 2019){
@@ -109,6 +117,43 @@ server = function(input, output, session) {
   }else{
         cleaning_df()[cleaning_df()$Chance == 1,]
     }
+  )
+  
+  output$radar = renderPlot(
+    if(active_year() == 2019){
+    normalize_data <- function(x) {
+      return((100)*(x - rep(min(x), length(x))) / (rep(max(x), length(x)) - rep(min(x), length(x))))
+    }
+
+    mvp_1990_graph_display = [,c("player","per", "tspercent", "pts", "ast", "trb")]
+    for (i in colnames(mvp_1990_graph_display)) {
+      if (i == "player") {
+        
+        next;
+      }
+      mvp_1990_graph_display[,i] = normalize_data(mvp_1990_graph_display[,i])
+    }
+    
+    p <- plot_ly(
+      type = 'scatterpolar',
+      fill = 'toself'
+    ) %>%
+      add_trace(
+        r = as.numeric(mvp_1990_graph_display[1, c("per", "tspercent", "pts", "ast", "trb")]),
+        theta = c('per','tspercent','pts', 'ast', "trb"),
+        name = mvp_1990_graph_display[1, "player"]
+      ) %>%
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0, 100)
+          )
+        )
+      )
+    
+    return(p)
+    }else 
   )
   
   
